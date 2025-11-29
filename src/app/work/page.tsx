@@ -151,16 +151,28 @@ export default function WorkPage() {
               </span>
             </motion.div>
 
-            <SplitText
-              as="h1"
-              animation="chars-rotate"
-              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9]"
-              delay={0.3}
-              stagger={0.02}
-              trigger="load"
-            >
-              Proyectos que impulsan resultados
-            </SplitText>
+            <div className="space-y-2">
+              <SplitText
+                as="h1"
+                animation="chars-rotate"
+                className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9]"
+                delay={0.3}
+                stagger={0.02}
+                trigger="load"
+              >
+                Nuestros proyectos
+              </SplitText>
+              <SplitText
+                as="h1"
+                animation="chars-rotate"
+                className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] text-gradient"
+                delay={0.5}
+                stagger={0.02}
+                trigger="load"
+              >
+                destacados
+              </SplitText>
+            </div>
 
             <motion.p
               className="mt-8 text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed"

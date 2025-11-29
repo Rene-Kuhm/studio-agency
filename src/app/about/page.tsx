@@ -179,16 +179,19 @@ export default function AboutPage() {
             </motion.div>
 
             {/* Main headline */}
-            <SplitText
-              as="h1"
-              animation="chars-rotate"
-              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9]"
-              delay={0.3}
-              stagger={0.02}
-              trigger="load"
-            >
-              Creemos en el poder del diseño
-            </SplitText>
+            <div className="space-y-2">
+              <SplitText
+                as="h1"
+                animation="chars-rotate"
+                className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9]"
+                delay={0.3}
+                stagger={0.02}
+                trigger="load"
+              >
+                Creemos en el poder 
+                del diseño
+              </SplitText>
+            </div>
 
             <motion.p
               className="mt-8 text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed"

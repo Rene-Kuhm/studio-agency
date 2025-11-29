@@ -145,7 +145,7 @@ export default function ContactPage() {
               stagger={0.02}
               trigger="load"
             >
-              Hablemos de tu proyecto
+              Conversemos
             </SplitText>
 
             <motion.p
