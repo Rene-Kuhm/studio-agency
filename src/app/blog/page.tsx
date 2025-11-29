@@ -165,16 +165,28 @@ export default function BlogPage() {
               </span>
             </motion.div>
 
-            <SplitText
-              as="h1"
-              animation="chars-rotate"
-              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9]"
-              delay={0.3}
-              stagger={0.02}
-              trigger="load"
-            >
-              Ideas y tendencias
-            </SplitText>
+            <div className="space-y-1 md:space-y-2">
+              <SplitText
+                as="h1"
+                animation="chars-wave"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[0.95]"
+                delay={0.3}
+                stagger={0.03}
+                trigger="load"
+              >
+                Ideas y
+              </SplitText>
+              <SplitText
+                as="h1"
+                animation="chars-wave"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[0.95] text-accent"
+                delay={0.5}
+                stagger={0.03}
+                trigger="load"
+              >
+                tendencias
+              </SplitText>
+            </div>
 
             <motion.p
               className="mt-8 text-xl md:text-2xl text-muted-foreground max-w-xl leading-relaxed"
