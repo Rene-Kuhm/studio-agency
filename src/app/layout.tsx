@@ -34,6 +34,17 @@ export const metadata: Metadata = {
     'tecnología',
   ],
   authors: [{ name: 'TecnoDespegue' }],
+  manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-192.svg', sizes: '192x192', type: 'image/svg+xml' },
+      { url: '/icon-512.svg', sizes: '512x512', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/apple-icon.svg', type: 'image/svg+xml' },
+    ],
+  },
   openGraph: {
     type: 'website',
     locale: 'es_AR',
@@ -53,6 +64,7 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  themeColor: '#a67c52',
 };
 
 export default function RootLayout({
