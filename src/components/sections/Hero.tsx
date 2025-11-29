@@ -101,13 +101,13 @@ export function Hero() {
           </motion.div>
 
           {/* Main headline with split text animation */}
-          <div className="space-y-2">
+          <div className="space-y-1 md:space-y-2">
             <SplitText
               as="h1"
-              animation="chars-rotate"
-              className="text-[clamp(3rem,10vw,8rem)] font-bold leading-[0.9] tracking-tight"
+              animation="chars-wave"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight"
               delay={0.3}
-              stagger={0.02}
+              stagger={0.03}
               trigger="load"
             >
               Creamos
@@ -115,24 +115,24 @@ export function Hero() {
 
             <SplitText
               as="h1"
-              animation="chars-rotate"
-              className="text-[clamp(3rem,10vw,8rem)] font-bold leading-[0.9] tracking-tight text-accent"
+              animation="chars-wave"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight text-accent"
               delay={0.5}
-              stagger={0.02}
+              stagger={0.03}
               trigger="load"
             >
-              experiencias digitales
+              experiencias
             </SplitText>
 
             <SplitText
               as="h1"
-              animation="chars-rotate"
-              className="text-[clamp(3rem,10vw,8rem)] font-bold leading-[0.9] tracking-tight"
+              animation="chars-wave"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight text-accent"
               delay={0.7}
-              stagger={0.02}
+              stagger={0.03}
               trigger="load"
             >
-              únicas
+              digitales únicas
             </SplitText>
           </div>
 
