@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="public/studio-logo.svg" alt="Studio Agency Logo" width="80" height="80">
+  <img src="public/tecnodespegue-logo.svg" alt="TecnoDespegue Logo" width="80" height="80">
 </p>
 
-<h1 align="center">Studio Agency</h1>
+<h1 align="center">TecnoDespegue</h1>
 
 <p align="center">
-  <strong>Premium Creative Agency Website built with Next.js 16 & 2025 Design Trends</strong>
+  <strong>Agencia Digital - Website Premium con Next.js 16 & Tendencias 2025</strong>
 </p>
 
 <p align="center">

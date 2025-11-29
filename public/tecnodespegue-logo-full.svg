@@ -1,0 +1,26 @@
+<svg width="280" height="80" viewBox="0 0 280 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon background -->
+  <rect width="80" height="80" rx="18" fill="#a67c52"/>
+
+  <!-- Rocket/Arrow shape -->
+  <path d="M40 12 L52 32 L46 32 L46 52 L34 52 L34 32 L28 32 Z" fill="#f8f5f2"/>
+
+  <!-- Exhaust flames / tech lines -->
+  <rect x="34" y="54" width="12" height="3" rx="1.5" fill="#f8f5f2" opacity="0.9"/>
+  <rect x="36" y="59" width="8" height="3" rx="1.5" fill="#f8f5f2" opacity="0.7"/>
+  <rect x="38" y="64" width="4" height="3" rx="1.5" fill="#f8f5f2" opacity="0.5"/>
+
+  <!-- Tech nodes -->
+  <circle cx="24" cy="40" r="3" fill="#c9a87c"/>
+  <circle cx="56" cy="40" r="3" fill="#c9a87c"/>
+
+  <!-- Text: TecnoDespegue -->
+  <text x="100" y="38" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="24" font-weight="bold" fill="#1a1614">
+    Tecno<tspan fill="#a67c52">Despegue</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="100" y="58" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="500" fill="#8b7355" letter-spacing="0.1em">
+    AGENCIA DIGITAL
+  </text>
+</svg>

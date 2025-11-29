@@ -67,12 +67,20 @@ export function Header() {
                 className="flex items-center gap-2"
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center">
-                  <span className="text-accent-foreground font-bold text-lg">S</span>
+                <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center relative overflow-hidden">
+                  {/* Rocket icon */}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="relative z-10">
+                    <path d="M12 2L16 10H14V16H10V10H8L12 2Z" fill="#f8f5f2"/>
+                    <rect x="10" y="17" width="4" height="1.5" rx="0.75" fill="#f8f5f2" opacity="0.8"/>
+                    <rect x="10.5" y="19" width="3" height="1.5" rx="0.75" fill="#f8f5f2" opacity="0.6"/>
+                    <rect x="11" y="21" width="2" height="1" rx="0.5" fill="#f8f5f2" opacity="0.4"/>
+                  </svg>
                 </div>
-                <span className="text-xl font-bold tracking-tight hidden sm:block">
-                  STUDIO
-                </span>
+                <div className="hidden sm:flex flex-col leading-none">
+                  <span className="text-lg font-bold tracking-tight">
+                    Tecno<span className="text-accent">Despegue</span>
+                  </span>
+                </div>
               </motion.div>
             </MagneticButton>
           </Link>
@@ -228,10 +236,10 @@ export function Header() {
                   ¿Listo para empezar?
                 </p>
                 <a
-                  href="mailto:hola@studio.com"
+                  href="mailto:hola@tecnodespegue.com"
                   className="text-2xl font-bold text-accent hover:underline"
                 >
-                  hola@studio.com
+                  hola@tecnodespegue.com
                 </a>
               </motion.div>
             </nav>

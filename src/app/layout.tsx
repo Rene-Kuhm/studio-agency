@@ -18,35 +18,36 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Studio - Agencia Creativa Digital',
-    template: '%s | Studio',
+    default: 'TecnoDespegue - Agencia Digital',
+    template: '%s | TecnoDespegue',
   },
   description:
-    'Agencia creativa especializada en diseño web, branding y experiencias digitales de alto impacto. Creamos marcas que conectan.',
+    'Agencia digital especializada en desarrollo web, branding y experiencias digitales que impulsan tu negocio al siguiente nivel.',
   keywords: [
-    'agencia creativa',
+    'agencia digital',
+    'desarrollo web',
     'diseño web',
     'branding',
-    'desarrollo web',
     'experiencias digitales',
     'UX/UI',
-    'motion design',
+    'aplicaciones web',
+    'tecnología',
   ],
-  authors: [{ name: 'Studio' }],
+  authors: [{ name: 'TecnoDespegue' }],
   openGraph: {
     type: 'website',
     locale: 'es_AR',
-    url: 'https://studio.com',
-    siteName: 'Studio',
-    title: 'Studio - Agencia Creativa Digital',
+    url: 'https://tecnodespegue.com',
+    siteName: 'TecnoDespegue',
+    title: 'TecnoDespegue - Agencia Digital',
     description:
-      'Agencia creativa especializada en diseño web, branding y experiencias digitales de alto impacto.',
+      'Agencia digital especializada en desarrollo web, branding y experiencias digitales que impulsan tu negocio.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Studio - Agencia Creativa Digital',
+    title: 'TecnoDespegue - Agencia Digital',
     description:
-      'Agencia creativa especializada en diseño web, branding y experiencias digitales de alto impacto.',
+      'Agencia digital especializada en desarrollo web, branding y experiencias digitales que impulsan tu negocio.',
   },
   robots: {
     index: true,

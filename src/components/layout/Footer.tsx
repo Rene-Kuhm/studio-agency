@@ -34,11 +34,20 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <FadeIn className="lg:col-span-1">
-            <Link href="/" className="inline-block">
-              <span className="text-2xl font-bold tracking-tight">STUDIO</span>
+            <Link href="/" className="inline-flex items-center gap-2">
+              <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2L16 10H14V16H10V10H8L12 2Z" fill="#f8f5f2"/>
+                  <rect x="10" y="17" width="4" height="1.5" rx="0.75" fill="#f8f5f2" opacity="0.8"/>
+                  <rect x="10.5" y="19" width="3" height="1.5" rx="0.75" fill="#f8f5f2" opacity="0.6"/>
+                </svg>
+              </div>
+              <span className="text-xl font-bold tracking-tight">
+                Tecno<span className="text-accent">Despegue</span>
+              </span>
             </Link>
             <p className="mt-4 text-muted-foreground max-w-xs">
-              Agencia creativa especializada en diseño web, branding y experiencias digitales de alto impacto.
+              Agencia digital especializada en desarrollo web, branding y experiencias digitales que impulsan tu negocio.
             </p>
           </FadeIn>
 
@@ -105,7 +114,7 @@ export function Footer() {
           transition={{ delay: 0.4 }}
         >
           <p className="text-sm text-muted-foreground">
-            © {currentYear} Studio. Todos los derechos reservados.
+            © {currentYear} TecnoDespegue. Todos los derechos reservados.
           </p>
           <p className="text-sm text-muted-foreground">
             Diseñado con pasión en Argentina
