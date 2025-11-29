@@ -122,7 +122,7 @@ export function Hero() {
                 stagger={0.02}
                 trigger="load"
               >
-                experiencias
+                experiencias digitales
               </SplitText>
 
               {/* Floating badge */}
@@ -145,7 +145,7 @@ export function Hero() {
               stagger={0.02}
               trigger="load"
             >
-              digitales únicas
+              únicas
             </SplitText>
           </div>
 
