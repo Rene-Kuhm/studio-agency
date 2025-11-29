@@ -1,0 +1,152 @@
+---
+title: "Guía Completa de Next.js para Principiantes"
+description: "Todo lo que necesitás saber para empezar con Next.js: desde la instalación hasta el deployment, explicado de forma simple y práctica."
+date: "2024-01-20"
+category: "Desarrollo"
+tags: ["nextjs", "react", "desarrollo web", "tutorial"]
+featured: true
+author:
+  name: "Carlos López"
+  bio: "Lead Developer en Studio"
+---
+
+Next.js se ha convertido en el framework de React más popular para crear aplicaciones web modernas. En esta guía, vamos a recorrer todo lo necesario para empezar.
+
+## ¿Por qué Next.js?
+
+Next.js resuelve muchos problemas comunes del desarrollo con React:
+
+- **Server-Side Rendering (SSR)**: Mejor SEO y performance inicial
+- **Static Site Generation (SSG)**: Sitios ultra-rápidos pre-renderizados
+- **API Routes**: Backend integrado sin configuración adicional
+- **File-based Routing**: Estructura de rutas intuitiva
+- **Optimización automática**: Imágenes, fuentes y más
+
+## Instalación
+
+Crear un nuevo proyecto es tan simple como:
+
+```bash
+npx create-next-app@latest mi-proyecto
+cd mi-proyecto
+npm run dev
+```
+
+## Estructura del Proyecto
+
+Next.js 14+ usa el App Router por defecto:
+
+```
+src/
+├── app/
+│   ├── layout.tsx      # Layout principal
+│   ├── page.tsx        # Página de inicio
+│   ├── about/
+│   │   └── page.tsx    # /about
+│   └── blog/
+│       ├── page.tsx    # /blog
+│       └── [slug]/
+│           └── page.tsx # /blog/:slug
+├── components/
+└── lib/
+```
+
+## Server Components vs Client Components
+
+Una de las características más importantes de Next.js 14 es la distinción entre componentes de servidor y cliente.
+
+### Server Components (por defecto)
+
+```tsx
+// Este componente se renderiza en el servidor
+async function ProductList() {
+  const products = await fetchProducts();
+
+  return (
+    <ul>
+      {products.map(p => <li key={p.id}>{p.name}</li>)}
+    </ul>
+  );
+}
+```
+
+### Client Components
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Clicks: {count}
+    </button>
+  );
+}
+```
+
+## Data Fetching
+
+Next.js simplifica la obtención de datos:
+
+```tsx
+async function Page() {
+  // Esto se ejecuta en el servidor
+  const data = await fetch('https://api.example.com/data');
+  const posts = await data.json();
+
+  return <PostList posts={posts} />;
+}
+```
+
+## API Routes
+
+Creá endpoints de API dentro de tu proyecto:
+
+```tsx
+// app/api/hello/route.ts
+export async function GET() {
+  return Response.json({ message: 'Hola mundo!' });
+}
+```
+
+## Metadata y SEO
+
+Next.js facilita la optimización para motores de búsqueda:
+
+```tsx
+export const metadata = {
+  title: 'Mi Página',
+  description: 'Una descripción genial',
+  openGraph: {
+    title: 'Mi Página',
+    description: 'Una descripción genial',
+  },
+};
+```
+
+## Deployment
+
+Deployar a Vercel es instantáneo:
+
+1. Conectá tu repositorio de GitHub
+2. Vercel detecta automáticamente que es un proyecto Next.js
+3. Cada push a main genera un deployment automático
+
+---
+
+## Próximos Pasos
+
+Una vez que domines los básicos, explorá:
+
+- **Server Actions**: Mutations sin API routes
+- **Streaming**: UI progresiva con Suspense
+- **Parallel Routes**: Layouts avanzados
+- **Intercepting Routes**: Modales con URLs
+
+Next.js es un framework en constante evolución. La mejor forma de aprender es construyendo proyectos reales.
+
+¿Tenés preguntas? ¡Dejanos un comentario!

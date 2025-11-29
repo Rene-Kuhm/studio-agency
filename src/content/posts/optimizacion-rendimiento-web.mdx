@@ -1,0 +1,159 @@
+---
+title: "Optimización de Rendimiento Web: Guía Práctica"
+description: "Técnicas probadas para mejorar la velocidad de tu sitio web y ofrecer una mejor experiencia de usuario."
+date: "2024-02-20"
+category: "Desarrollo"
+tags: ["performance", "optimización", "core web vitals", "SEO"]
+featured: false
+author:
+  name: "Carlos López"
+  bio: "Lead Developer en Studio"
+---
+
+La velocidad de carga afecta directamente la experiencia del usuario, las conversiones y el SEO. En esta guía, cubrimos las técnicas más efectivas para optimizar el rendimiento web.
+
+## Por qué importa el rendimiento
+
+Los números hablan por sí solos:
+
+- **53%** de usuarios abandonan si un sitio tarda más de 3 segundos
+- **1 segundo** de mejora puede aumentar conversiones en 7%
+- Google usa la velocidad como factor de ranking
+
+## Core Web Vitals
+
+Google mide la experiencia del usuario con tres métricas clave:
+
+### LCP (Largest Contentful Paint)
+
+Mide cuánto tarda en cargarse el contenido principal.
+
+- **Bueno**: < 2.5 segundos
+- **Necesita mejora**: 2.5 - 4 segundos
+- **Pobre**: > 4 segundos
+
+### FID (First Input Delay)
+
+Mide la interactividad: cuánto tarda el sitio en responder al primer click.
+
+- **Bueno**: < 100ms
+- **Necesita mejora**: 100 - 300ms
+- **Pobre**: > 300ms
+
+### CLS (Cumulative Layout Shift)
+
+Mide la estabilidad visual: cuánto se mueven los elementos mientras carga.
+
+- **Bueno**: < 0.1
+- **Necesita mejora**: 0.1 - 0.25
+- **Pobre**: > 0.25
+
+## Técnicas de Optimización
+
+### 1. Optimización de Imágenes
+
+Las imágenes suelen ser el mayor peso de una página.
+
+```tsx
+// Usar next/image en Next.js
+import Image from 'next/image';
+
+<Image
+  src="/hero.jpg"
+  alt="Hero"
+  width={1200}
+  height={600}
+  priority // Para imágenes above the fold
+  placeholder="blur"
+/>
+```
+
+Recomendaciones:
+
+- Usar formatos modernos (WebP, AVIF)
+- Implementar lazy loading
+- Definir dimensiones explícitas
+- Usar CDN para servir imágenes
+
+### 2. Optimización de JavaScript
+
+El JavaScript bloquea el renderizado. Minimizá su impacto:
+
+```tsx
+// Dynamic imports para código no crítico
+const HeavyComponent = dynamic(
+  () => import('./HeavyComponent'),
+  { ssr: false }
+);
+
+// Prefetch de rutas probables
+<Link href="/productos" prefetch>
+  Productos
+</Link>
+```
+
+### 3. CSS Crítico
+
+Extrae el CSS necesario para el contenido above-the-fold:
+
+- Inline CSS crítico en el HTML
+- Defer CSS no crítico
+- Eliminar CSS no utilizado
+
+### 4. Fonts
+
+Las fuentes pueden bloquear el renderizado:
+
+```tsx
+// En Next.js - fonts optimizados automáticamente
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap', // Muestra texto mientras carga
+});
+```
+
+### 5. Caching
+
+Implementá una estrategia de caché efectiva:
+
+- **Browser caching**: Headers para assets estáticos
+- **CDN**: Servir desde edge locations
+- **Service Worker**: Para apps offline-first
+
+## Herramientas de Medición
+
+### Lighthouse
+
+Integrado en Chrome DevTools, mide performance, accesibilidad, SEO y más.
+
+### WebPageTest
+
+Análisis detallado desde diferentes ubicaciones y dispositivos.
+
+### Core Web Vitals en Search Console
+
+Datos reales de usuarios de tu sitio.
+
+## Checklist de Optimización
+
+- [ ] Imágenes optimizadas y con lazy loading
+- [ ] JavaScript minimizado y tree-shaken
+- [ ] CSS crítico inline
+- [ ] Fuentes con font-display: swap
+- [ ] Compresión gzip/brotli habilitada
+- [ ] CDN configurado
+- [ ] Cache headers apropiados
+- [ ] Preconnect a dominios externos
+- [ ] Layout shifts evitados
+
+---
+
+## Conclusión
+
+La optimización de rendimiento es un proceso continuo, no un proyecto de una vez. Medí regularmente, identificá cuellos de botella y priorizá mejoras con mayor impacto.
+
+Un sitio rápido no solo mejora la experiencia del usuario, también impacta directamente en métricas de negocio como conversiones y engagement.
+
+¿Qué técnica te resultó más útil? ¡Compartí tu experiencia!
