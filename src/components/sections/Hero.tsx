@@ -113,19 +113,16 @@ export function Hero() {
               Creamos
             </SplitText>
 
-            <div className="flex items-center gap-4 flex-wrap">
-              <SplitText
-                as="h1"
-                animation="chars-rotate"
-                className="text-[clamp(3rem,10vw,8rem)] font-bold leading-[0.9] tracking-tight text-gradient"
-                delay={0.5}
-                stagger={0.02}
-                trigger="load"
-              >
-                experiencias digitales
-              </SplitText>
-
-            </div>
+            <SplitText
+              as="h1"
+              animation="chars-rotate"
+              className="text-[clamp(3rem,10vw,8rem)] font-bold leading-[0.9] tracking-tight text-accent"
+              delay={0.5}
+              stagger={0.02}
+              trigger="load"
+            >
+              experiencias digitales
+            </SplitText>
 
             <SplitText
               as="h1"
