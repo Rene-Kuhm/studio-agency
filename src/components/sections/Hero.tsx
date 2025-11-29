@@ -125,16 +125,6 @@ export function Hero() {
                 experiencias digitales
               </SplitText>
 
-              {/* Floating badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0, rotate: -10 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                transition={{ duration: 0.6, delay: 1, type: 'spring' }}
-                className="hidden lg:flex items-center gap-2 px-5 py-3 rounded-full bg-foreground text-background text-sm font-medium"
-              >
-                <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                Premiados en Awwwards
-              </motion.div>
             </div>
 
             <SplitText
