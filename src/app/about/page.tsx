@@ -284,7 +284,7 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  Studio nació en 2016 con una visión clara: democratizar el acceso
+                  TecnoDespegue nació en 2016 con una visión clara: democratizar el acceso
                   a diseño de alta calidad. Lo que comenzó como un pequeño estudio
                   de dos personas se ha convertido en una agencia reconocida por su
                   enfoque innovador.

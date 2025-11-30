@@ -32,7 +32,7 @@ export function About() {
               Somos un equipo apasionado por el diseño y la tecnología
             </h2>
             <p className="mt-6 text-lg text-muted-foreground">
-              En Studio, creemos que el diseño excepcional nace de la combinación
+              En TecnoDespegue, creemos que el diseño excepcional nace de la combinación
               perfecta entre creatividad y estrategia. Trabajamos con marcas
               ambiciosas que buscan destacar en el mundo digital.
             </p>
