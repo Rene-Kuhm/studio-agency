@@ -4,14 +4,14 @@ import { SITE_URL } from '@/lib/env';
 
 // Last updated dates for static pages (update when content changes)
 const STATIC_PAGE_DATES = {
-  home: '2024-01-15',
-  about: '2024-01-10',
-  services: '2024-01-10',
-  work: '2024-01-12',
-  contact: '2024-01-10',
-  privacy: '2024-01-01',
-  terms: '2024-01-01',
-  faq: '2024-01-15',
+  home: '2025-11-30',
+  about: '2025-11-30',
+  services: '2025-11-30',
+  work: '2025-11-30',
+  contact: '2025-11-30',
+  privacy: '2025-11-30',
+  terms: '2025-11-30',
+  faq: '2025-11-30',
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
