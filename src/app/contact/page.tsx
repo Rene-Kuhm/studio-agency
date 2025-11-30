@@ -384,7 +384,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         onFocus={() => setFocusedField('name')}
                         onBlur={() => setFocusedField(null)}
-                        className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent transition-colors"
+                        className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-colors"
                       />
                     </div>
 
@@ -408,7 +408,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         onFocus={() => setFocusedField('email')}
                         onBlur={() => setFocusedField(null)}
-                        className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent transition-colors"
+                        className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-colors"
                       />
                     </div>
                   </div>
@@ -452,7 +452,7 @@ export default function ContactPage() {
                         required
                         value={formData.service}
                         onChange={handleChange}
-                        className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent transition-colors appearance-none cursor-pointer"
+                        className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-colors appearance-none cursor-pointer"
                       >
                         <option value="">Seleccionar</option>
                         {services.map((service) => (
@@ -475,7 +475,7 @@ export default function ContactPage() {
                         name="budget"
                         value={formData.budget}
                         onChange={handleChange}
-                        className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent transition-colors appearance-none cursor-pointer"
+                        className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-colors appearance-none cursor-pointer"
                       >
                         <option value="">Seleccionar</option>
                         <option value="< $5,000">Menos de $5,000 USD</option>
@@ -507,7 +507,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       onFocus={() => setFocusedField('message')}
                       onBlur={() => setFocusedField(null)}
-                      className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent transition-colors resize-none"
+                      className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-colors resize-none"
                     />
                   </div>
 

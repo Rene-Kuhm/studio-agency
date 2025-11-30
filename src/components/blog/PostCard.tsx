@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { formatDate } from '@/lib/utils/date';
 import type { PostMeta } from '@/lib/blog/types';
@@ -21,9 +22,13 @@ export function PostCard({ post }: PostCardProps) {
         {/* Cover Image */}
         <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-secondary mb-6">
           {post.coverImage ? (
-            <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-              style={{ backgroundImage: `url(${post.coverImage})` }}
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent/5 transition-transform duration-500 group-hover:scale-105" />

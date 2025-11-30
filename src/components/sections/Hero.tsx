@@ -101,11 +101,11 @@ export function Hero() {
           </motion.div>
 
           {/* Main headline with split text animation */}
-          <div className="space-y-1 md:space-y-2">
+          <h1 className="space-y-1 md:space-y-2">
             <SplitText
-              as="h1"
+              as="span"
               animation="chars-wave"
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight"
+              className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight"
               delay={0.3}
               stagger={0.03}
               trigger="load"
@@ -114,9 +114,9 @@ export function Hero() {
             </SplitText>
 
             <SplitText
-              as="h1"
+              as="span"
               animation="chars-wave"
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight text-accent"
+              className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight text-accent"
               delay={0.5}
               stagger={0.03}
               trigger="load"
@@ -125,16 +125,16 @@ export function Hero() {
             </SplitText>
 
             <SplitText
-              as="h1"
+              as="span"
               animation="chars-wave"
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight text-accent"
+              className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight text-accent"
               delay={0.7}
               stagger={0.03}
               trigger="load"
             >
               digitales únicas
             </SplitText>
-          </div>
+          </h1>
 
           {/* Subtitle */}
           <motion.p
