@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FadeIn } from '@/components/animations/FadeIn';
 import { StaggerContainer, StaggerItem } from '@/components/animations/StaggerContainer';
@@ -9,7 +10,7 @@ const stats = [
   { value: '50+', label: 'Proyectos completados' },
   { value: '8', label: 'Años de experiencia' },
   { value: '30+', label: 'Clientes satisfechos' },
-  { value: '5', label: 'Premios ganados' },
+  { value: '15+', label: 'Tecnologías dominadas' },
 ];
 
 export function About() {
@@ -25,19 +26,39 @@ export function About() {
     <section ref={containerRef} className="py-32 overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Content */}
+          {/* Profile Image & Content */}
           <FadeIn>
-            <span className="text-accent font-medium">Sobre nosotros</span>
-            <h2 className="mt-4 text-4xl md:text-5xl font-bold tracking-tight">
-              Somos un equipo apasionado por el diseño y la tecnología
-            </h2>
-            <p className="mt-6 text-lg text-muted-foreground">
-              En TecnoDespegue, creemos que el diseño excepcional nace de la combinación
-              perfecta entre creatividad y estrategia. Trabajamos con marcas
-              ambiciosas que buscan destacar en el mundo digital.
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-8">
+              <motion.div
+                className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-accent/20 flex-shrink-0"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Image
+                  src="/images/rene-kuhm.jpg"
+                  alt="René Kuhm - Desarrollador FullStack"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </motion.div>
+              <div className="text-center md:text-left">
+                <span className="text-accent font-medium">Sobre mí</span>
+                <h2 className="mt-2 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+                  René Kuhm
+                </h2>
+                <p className="mt-2 text-xl text-muted-foreground">
+                  Desarrollador FullStack
+                </p>
+              </div>
+            </div>
+            <p className="text-lg text-muted-foreground">
+              Soy un desarrollador apasionado por crear experiencias digitales excepcionales.
+              En TecnoDespegue, combino creatividad y estrategia para ayudar a marcas
+              ambiciosas a destacar en el mundo digital.
             </p>
             <p className="mt-4 text-lg text-muted-foreground">
-              Nuestro enfoque se centra en entender profundamente tu negocio y tu
+              Mi enfoque se centra en entender profundamente tu negocio y tu
               audiencia para crear soluciones que no solo se ven increíbles, sino
               que también generan resultados medibles.
             </p>

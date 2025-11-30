@@ -1,43 +1,25 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
 import { SplitText } from '@/components/animations/SplitText';
-import { HoverCard } from '@/components/animations/HoverCard';
 import { Marquee } from '@/components/animations/Marquee';
 import { MorphingBlob } from '@/components/animations/MorphingBlob';
 import { CTA } from '@/components/sections/CTA';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const team = [
-  {
-    name: 'María García',
-    role: 'Directora Creativa',
-    bio: 'Con más de 10 años de experiencia en diseño, María lidera la visión creativa del estudio.',
-    color: '#a67c52',
-  },
-  {
-    name: 'Carlos López',
-    role: 'Lead Developer',
-    bio: 'Especialista en arquitectura frontend y amante de las nuevas tecnologías web.',
-    color: '#c9a87c',
-  },
-  {
-    name: 'Ana Martínez',
-    role: 'UX Designer',
-    bio: 'Experta en investigación de usuarios y diseño de experiencias centradas en las personas.',
-    color: '#8b7355',
-  },
-  {
-    name: 'Diego Fernández',
-    role: 'Motion Designer',
-    bio: 'Creador de animaciones y experiencias interactivas que dan vida a las marcas.',
-    color: '#d4a574',
-  },
+const skills = [
+  { name: 'Next.js', level: 95 },
+  { name: 'React', level: 95 },
+  { name: 'TypeScript', level: 90 },
+  { name: 'Node.js', level: 85 },
+  { name: 'Tailwind CSS', level: 95 },
+  { name: 'PostgreSQL', level: 80 },
 ];
 
 const values = [
@@ -45,7 +27,7 @@ const values = [
     number: '01',
     title: 'Excelencia',
     description:
-      'Nos comprometemos con la calidad en cada detalle. Cada proyecto es una oportunidad para superar expectativas.',
+      'Me comprometo con la calidad en cada detalle. Cada proyecto es una oportunidad para superar expectativas.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
@@ -56,7 +38,7 @@ const values = [
     number: '02',
     title: 'Colaboración',
     description:
-      'Trabajamos junto a nuestros clientes como socios estratégicos, no como proveedores.',
+      'Trabajo junto a mis clientes como socio estratégico, no como proveedor.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -67,7 +49,7 @@ const values = [
     number: '03',
     title: 'Innovación',
     description:
-      'Exploramos constantemente nuevas tecnologías y tendencias para ofrecer soluciones de vanguardia.',
+      'Exploro constantemente nuevas tecnologías y tendencias para ofrecer soluciones de vanguardia.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -78,7 +60,7 @@ const values = [
     number: '04',
     title: 'Impacto',
     description:
-      'Medimos nuestro éxito por los resultados tangibles que generamos para nuestros clientes.',
+      'Mido mi éxito por los resultados tangibles que genero para mis clientes.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -88,15 +70,45 @@ const values = [
 ];
 
 const stats = [
-  { value: '2016', label: 'Año de fundación' },
+  { value: '8+', label: 'Años de experiencia' },
   { value: '50+', label: 'Proyectos completados' },
-  { value: '30+', label: 'Clientes felices' },
-  { value: '5', label: 'Premios ganados' },
+  { value: '30+', label: 'Clientes satisfechos' },
+  { value: '15+', label: 'Tecnologías dominadas' },
+];
+
+const socialLinks = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/Rene-Kuhm',
+    icon: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+      </svg>
+    )
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/renekuhm',
+    icon: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+      </svg>
+    )
+  },
+  {
+    name: 'Twitter',
+    url: 'https://twitter.com/renekuhm',
+    icon: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    )
+  },
 ];
 
 export default function AboutPage() {
   const heroRef = useRef<HTMLElement>(null);
-  const teamRef = useRef<HTMLDivElement>(null);
+  const skillsRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -107,23 +119,20 @@ export default function AboutPage() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
-    if (!teamRef.current) return;
+    if (!skillsRef.current) return;
 
-    const cards = teamRef.current.querySelectorAll('.team-card');
+    const bars = skillsRef.current.querySelectorAll('.skill-bar');
 
-    cards.forEach((card, i) => {
+    bars.forEach((bar) => {
       gsap.fromTo(
-        card,
-        { y: 100, opacity: 0, rotateY: -15 },
+        bar,
+        { scaleX: 0 },
         {
-          y: 0,
-          opacity: 1,
-          rotateY: 0,
-          duration: 1,
-          delay: i * 0.15,
+          scaleX: 1,
+          duration: 1.2,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: card,
+            trigger: bar,
             start: 'top 85%',
             toggleActions: 'play none none none',
           },
@@ -158,83 +167,137 @@ export default function AboutPage() {
           className="container mx-auto px-6 pt-40 pb-20 relative z-10"
           style={{ y, opacity }}
         >
-          <div className="max-w-5xl">
-            {/* Pre-headline */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Profile Image */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex items-center gap-3 mb-8"
+              className="relative order-2 lg:order-1"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <motion.span
-                className="w-12 h-[2px] bg-accent"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                style={{ transformOrigin: 'left' }}
-              />
-              <span className="text-sm font-medium tracking-[0.2em] uppercase text-muted-foreground">
-                Nosotros
-              </span>
-            </motion.div>
-
-            {/* Main headline */}
-            <div className="space-y-1 md:space-y-2">
-              <SplitText
-                as="h1"
-                animation="chars-wave"
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[0.95]"
-                delay={0.3}
-                stagger={0.03}
-                trigger="load"
-              >
-                Creemos en el
-              </SplitText>
-              <SplitText
-                as="h1"
-                animation="chars-wave"
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[0.95] text-accent"
-                delay={0.5}
-                stagger={0.03}
-                trigger="load"
-              >
-                poder del diseño
-              </SplitText>
-            </div>
-
-            <motion.p
-              className="mt-8 text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-            >
-              Somos un equipo multidisciplinario de diseñadores, desarrolladores y
-              estrategas unidos por la pasión de crear experiencias digitales
-              excepcionales.
-            </motion.p>
-
-            {/* Stats */}
-            <motion.div
-              className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-            >
-              {stats.map((stat, i) => (
+              <div className="relative w-full max-w-md mx-auto">
                 <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1.2 + i * 0.1 }}
-                  className="text-center md:text-left"
+                  className="aspect-square rounded-3xl overflow-hidden border-4 border-accent/20"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
                 >
-                  <span className="text-4xl md:text-5xl font-bold text-gradient">
-                    {stat.value}
-                  </span>
-                  <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+                  <Image
+                    src="/images/rene-kuhm.jpg"
+                    alt="René Kuhm - Desarrollador FullStack"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                 </motion.div>
-              ))}
+                {/* Floating badge */}
+                <motion.div
+                  className="absolute -bottom-4 -right-4 px-6 py-3 bg-foreground text-background rounded-2xl font-medium shadow-xl"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                >
+                  Desarrollador FullStack
+                </motion.div>
+                {/* Social links */}
+                <motion.div
+                  className="absolute -left-4 top-1/2 -translate-y-1/2 flex flex-col gap-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 1 }}
+                >
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full bg-background border border-border flex items-center justify-center hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all duration-300"
+                      aria-label={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </motion.div>
+              </div>
             </motion.div>
+
+            {/* Content */}
+            <div className="order-1 lg:order-2">
+              {/* Pre-headline */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="flex items-center gap-3 mb-8"
+              >
+                <motion.span
+                  className="w-12 h-[2px] bg-accent"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  style={{ transformOrigin: 'left' }}
+                />
+                <span className="text-sm font-medium tracking-[0.2em] uppercase text-muted-foreground">
+                  Sobre mí
+                </span>
+              </motion.div>
+
+              {/* Main headline */}
+              <div className="space-y-1 md:space-y-2">
+                <SplitText
+                  as="h1"
+                  animation="chars-wave"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.95]"
+                  delay={0.3}
+                  stagger={0.03}
+                  trigger="load"
+                >
+                  René Kuhm
+                </SplitText>
+                <SplitText
+                  as="h1"
+                  animation="chars-wave"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.95] text-accent"
+                  delay={0.5}
+                  stagger={0.03}
+                  trigger="load"
+                >
+                  FullStack Dev
+                </SplitText>
+              </div>
+
+              <motion.p
+                className="mt-8 text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1 }}
+              >
+                Desarrollador apasionado por crear experiencias digitales excepcionales.
+                Especializado en React, Next.js y soluciones web de alto rendimiento.
+              </motion.p>
+
+              {/* Stats */}
+              <motion.div
+                className="mt-12 grid grid-cols-2 gap-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
+              >
+                {stats.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 1.2 + i * 0.1 }}
+                  >
+                    <span className="text-3xl md:text-4xl font-bold text-gradient">
+                      {stat.value}
+                    </span>
+                    <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </motion.div>
 
@@ -266,16 +329,16 @@ export default function AboutPage() {
               <div className="flex items-center gap-3 mb-6">
                 <span className="w-12 h-[2px] bg-accent" />
                 <span className="text-sm font-medium tracking-[0.2em] uppercase text-muted-foreground">
-                  Nuestra Historia
+                  Mi Historia
                 </span>
               </div>
               <SplitText
                 as="h2"
                 animation="words"
-                className="text-4xl md:text-5xl font-bold tracking-tight"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
                 trigger="scroll"
               >
-                De una idea a una agencia premiada
+                De la curiosidad a la pasión
               </SplitText>
               <div className="mt-8 space-y-6 text-lg text-muted-foreground">
                 <motion.p
@@ -284,10 +347,9 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  TecnoDespegue nació en 2016 con una visión clara: democratizar el acceso
-                  a diseño de alta calidad. Lo que comenzó como un pequeño estudio
-                  de dos personas se ha convertido en una agencia reconocida por su
-                  enfoque innovador.
+                  Con más de 8 años de experiencia en desarrollo web, he tenido el privilegio
+                  de trabajar en proyectos diversos que van desde startups emergentes hasta
+                  empresas consolidadas.
                 </motion.p>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -295,47 +357,37 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  Hemos tenido el privilegio de trabajar con startups emergentes,
-                  empresas consolidadas y marcas globales, ayudándolas a contar
-                  sus historias de manera memorable.
+                  Mi enfoque combina creatividad técnica con una profunda comprensión de las
+                  necesidades del negocio, creando soluciones que no solo funcionan
+                  perfectamente sino que también generan resultados medibles.
                 </motion.p>
               </div>
             </ScrollReveal>
 
+            {/* Skills */}
             <ScrollReveal animation="fade-up" delay={0.3}>
-              <div className="relative">
-                <motion.div
-                  className="aspect-square rounded-3xl overflow-hidden"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <div className="w-full h-full bg-gradient-to-br from-accent/30 via-accent-secondary/20 to-background relative">
-                    {/* Decorative elements */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <motion.div
-                        className="w-32 h-32 rounded-full bg-accent/20"
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 4, repeat: Infinity }}
+              <div ref={skillsRef} className="space-y-6">
+                <h3 className="text-2xl font-bold mb-8">Tecnologías principales</h3>
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium">{skill.name}</span>
+                      <span className="text-muted-foreground">{skill.level}%</span>
+                    </div>
+                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                      <div
+                        className="skill-bar h-full bg-accent rounded-full origin-left"
+                        style={{ width: `${skill.level}%` }}
                       />
                     </div>
-                    <div className="absolute bottom-8 left-8 right-8">
-                      <div className="bg-background/80 backdrop-blur-sm rounded-2xl p-6">
-                        <p className="text-lg font-medium">&ldquo;El buen diseño es obvio. El gran diseño es transparente.&rdquo;</p>
-                        <p className="text-sm text-muted-foreground mt-2">— Joe Sparano</p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-                {/* Floating badge */}
-                <motion.div
-                  className="absolute -top-4 -right-4 px-4 py-2 bg-foreground text-background rounded-full text-sm font-medium"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
-                >
-                  8 años de experiencia
-                </motion.div>
+                  </motion.div>
+                ))}
               </div>
             </ScrollReveal>
           </div>
@@ -365,10 +417,10 @@ export default function AboutPage() {
             <SplitText
               as="h2"
               animation="words"
-              className="text-4xl md:text-6xl font-bold tracking-tight text-background"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-background"
               trigger="scroll"
             >
-              Lo que nos define
+              Lo que me define
             </SplitText>
           </ScrollReveal>
 
@@ -382,7 +434,6 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ y: -5 }}
-                data-cursor="Ver más"
               >
                 {/* Number background */}
                 <span className="absolute top-6 right-6 text-[8rem] font-bold text-background/5 leading-none select-none pointer-events-none">
@@ -412,113 +463,22 @@ export default function AboutPage() {
       {/* Marquee */}
       <Marquee speed={25} className="py-8 bg-accent">
         <span className="text-4xl md:text-6xl font-bold text-accent-foreground/10 whitespace-nowrap px-8">
-          CREATIVIDAD
+          REACT
         </span>
         <span className="text-accent-foreground/30 text-2xl">✦</span>
         <span className="text-4xl md:text-6xl font-bold text-accent-foreground/10 whitespace-nowrap px-8">
-          INNOVACIÓN
+          NEXT.JS
         </span>
         <span className="text-accent-foreground/30 text-2xl">✦</span>
         <span className="text-4xl md:text-6xl font-bold text-accent-foreground/10 whitespace-nowrap px-8">
-          EXCELENCIA
+          TYPESCRIPT
         </span>
         <span className="text-accent-foreground/30 text-2xl">✦</span>
         <span className="text-4xl md:text-6xl font-bold text-accent-foreground/10 whitespace-nowrap px-8">
-          IMPACTO
+          NODE.JS
         </span>
         <span className="text-accent-foreground/30 text-2xl">✦</span>
       </Marquee>
-
-      {/* Team Section */}
-      <section className="py-32 relative overflow-hidden">
-        <MorphingBlob
-          className="-bottom-40 -right-40"
-          color="var(--accent)"
-          size={400}
-          speed={10}
-        />
-
-        <div className="container mx-auto px-6 relative z-10">
-          <ScrollReveal animation="fade-up">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="w-12 h-[2px] bg-accent" />
-              <span className="text-sm font-medium tracking-[0.2em] uppercase text-muted-foreground">
-                El Equipo
-              </span>
-            </div>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-              <SplitText
-                as="h2"
-                animation="words"
-                className="text-4xl md:text-6xl font-bold tracking-tight"
-                trigger="scroll"
-              >
-                Las personas detrás de la magia
-              </SplitText>
-              <p className="text-xl text-muted-foreground max-w-md">
-                Talento y pasión que hacen posible cada proyecto.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div
-            ref={teamRef}
-            className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-            style={{ perspective: '1000px' }}
-          >
-            {team.map((member, index) => (
-              <HoverCard
-                key={member.name}
-                className="team-card"
-                glare
-                tilt
-                scale
-              >
-                <div className="group" data-cursor={member.role}>
-                  <div className="relative aspect-[3/4] rounded-3xl overflow-hidden mb-6">
-                    <div
-                      className="w-full h-full transition-transform duration-700 group-hover:scale-110"
-                      style={{
-                        background: `linear-gradient(135deg, ${member.color}40, ${member.color}20)`,
-                      }}
-                    />
-                    {/* Overlay on hover */}
-                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/60 transition-colors duration-300 flex items-center justify-center">
-                      <motion.div
-                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        initial={{ y: 20 }}
-                        whileHover={{ y: 0 }}
-                      >
-                        <div className="flex gap-4">
-                          {['Li', 'Tw', 'Dr'].map((social) => (
-                            <span
-                              key={social}
-                              className="w-10 h-10 rounded-full bg-background flex items-center justify-center text-sm font-medium"
-                            >
-                              {social}
-                            </span>
-                          ))}
-                        </div>
-                      </motion.div>
-                    </div>
-                    {/* Number badge */}
-                    <div className="absolute top-4 left-4 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-sm font-bold">
-                      {String(index + 1).padStart(2, '0')}
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold group-hover:text-accent transition-colors">
-                    {member.name}
-                  </h3>
-                  <p className="text-accent text-sm font-medium">{member.role}</p>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                    {member.bio}
-                  </p>
-                </div>
-              </HoverCard>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <CTA />
     </>
