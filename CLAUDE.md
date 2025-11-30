@@ -51,14 +51,14 @@ https://github.com/Rene-Kuhm/studio-agency
 16. [x] Búsqueda en blog (ya implementada en BlogPageClient)
 17. [x] Páginas de categorías (`/blog/category/[cat]`)
 18. [x] Páginas de tags (`/blog/tag/[tag]`)
+19. [x] Sistema de comentarios con Giscus (requiere configurar env vars)
 
 ## Tareas Pendientes
 
 ### Baja Prioridad (Mejoras futuras)
-1. [ ] Sistema de comentarios (Giscus/Disqus)
-2. [ ] Service worker para PWA offline
-3. [ ] OG images dinámicas para blog posts
-4. [ ] Link al RSS feed en header
+1. [ ] Service worker para PWA offline
+2. [ ] OG images dinámicas para blog posts
+3. [ ] Link al RSS feed en header
 
 ## Configuración Requerida
 

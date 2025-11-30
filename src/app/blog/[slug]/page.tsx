@@ -5,6 +5,7 @@ import { PostHeader } from '@/components/blog/PostHeader';
 import { PostContent } from '@/components/blog/PostContent';
 import { RelatedPosts } from '@/components/blog/RelatedPosts';
 import { BlogPostWrapper } from '@/components/blog/BlogPostWrapper';
+import { Comments } from '@/components/blog/Comments';
 import Link from 'next/link';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
 import { Marquee } from '@/components/animations/Marquee';
@@ -124,12 +125,13 @@ export default async function PostPage({ params }: PostPageProps) {
                 <p className="text-sm text-muted-foreground mb-4">Etiquetas</p>
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
-                    <span
+                    <Link
                       key={tag}
-                      className="px-4 py-2 text-sm bg-secondary hover:bg-accent hover:text-accent-foreground rounded-full transition-colors cursor-pointer"
+                      href={`/blog/tag/${encodeURIComponent(tag.toLowerCase())}`}
+                      className="px-4 py-2 text-sm bg-secondary hover:bg-accent hover:text-accent-foreground rounded-full transition-colors"
                     >
                       #{tag}
-                    </span>
+                    </Link>
                   ))}
                 </div>
               </ScrollReveal>
@@ -168,6 +170,9 @@ export default async function PostPage({ params }: PostPageProps) {
                 </div>
               </div>
             </ScrollReveal>
+
+            {/* Comments */}
+            <Comments slug={slug} />
 
             {/* Back to blog */}
             <ScrollReveal animation="fade-up" className="mt-12">
