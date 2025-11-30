@@ -25,23 +25,28 @@ const config: Config = {
   ],
 
   // Coverage configuration
+  // Focus on testable business logic, not visual components that are covered by E2E tests
   collectCoverageFrom: [
-    'src/**/*.{js,jsx,ts,tsx}',
+    'src/lib/**/*.{ts,tsx}',
+    'src/components/*.{ts,tsx}',
+    'src/components/ui/**/*.{ts,tsx}',
+    'src/app/api/**/*.{ts,tsx}',
     '!src/**/*.d.ts',
     '!src/**/types.ts',
-    '!src/app/**/layout.tsx',
-    '!src/app/**/loading.tsx',
-    '!src/app/**/not-found.tsx',
-    '!src/app/**/error.tsx',
+    '!src/lib/prisma.ts', // Prisma client singleton, tested via integration
+    '!src/lib/animations/**', // Animation variants, tested via E2E
+    '!src/components/Analytics.tsx', // Analytics, tested via E2E
+    '!src/app/api/csrf/route.ts', // CSRF route uses server-only cookies
+    '!src/lib/blog/**', // Blog utilities use fs, tested via E2E
   ],
 
-  // Coverage thresholds
+  // Coverage thresholds for core business logic
   coverageThreshold: {
     global: {
-      branches: 50,
-      functions: 50,
-      lines: 50,
-      statements: 50,
+      branches: 60,
+      functions: 60,
+      lines: 70,
+      statements: 70,
     },
   },
 
@@ -49,6 +54,7 @@ const config: Config = {
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/.next/',
+    '<rootDir>/e2e/',
   ],
 
   // Transform ignore patterns
