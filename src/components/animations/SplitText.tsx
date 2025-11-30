@@ -37,7 +37,13 @@ export function SplitText({
     if (!containerRef.current || hasAnimated.current) return;
 
     const container = containerRef.current;
-    const text = children;
+    // Sanitize text to prevent XSS - escape HTML entities
+    const text = children
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
 
     // Split text into spans
     let html = '';

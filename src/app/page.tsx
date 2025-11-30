@@ -34,9 +34,11 @@ const jsonLd = {
         availableLanguage: 'Spanish',
       },
       sameAs: [
-        'https://twitter.com/tecnodespegue',
-        'https://instagram.com/tecnodespegue',
-        'https://linkedin.com/company/tecnodespegue',
+        'https://github.com/Rene-Kuhm',
+        'https://www.linkedin.com/in/rene-kuhm-fullstack/',
+        'https://www.youtube.com/@Tecnodespegue',
+        'https://www.instagram.com/renekuhm/',
+        'https://www.facebook.com/profile.php?id=61583085119702',
       ],
     },
     {
