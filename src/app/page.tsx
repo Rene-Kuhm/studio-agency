@@ -57,7 +57,7 @@ const jsonLd = {
       description: 'Agencia digital especializada en desarrollo web, branding y experiencias digitales que impulsan tu negocio.',
       url: 'https://tecnodespegue.com',
       telephone: '+54-2334-409838',
-      email: 'hola@tecnodespegue.com',
+      email: 'contacto@tecnodespegue.com',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Buenos Aires',

@@ -149,7 +149,7 @@ export default function TermsPage() {
                 Para consultas sobre estos términos, contactanos en:
               </p>
               <ul>
-                <li>Email: <a href="mailto:hola@tecnodespegue.com">hola@tecnodespegue.com</a></li>
+                <li>Email: <a href="mailto:contacto@tecnodespegue.com">contacto@tecnodespegue.com</a></li>
               </ul>
             </ScrollReveal>
 

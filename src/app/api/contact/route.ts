@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
     if (resend) {
       await resend.emails.send({
         from: 'TecnoDespegue <no-reply@tecnodespegue.com>',
-        to: 'hola@tecnodespegue.com',
+        to: 'contacto@tecnodespegue.com',
         subject: `Nuevo mensaje de ${sanitizedData.name}`,
         html: `
           <h2>Nuevo mensaje de contacto</h2>

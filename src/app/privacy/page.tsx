@@ -120,7 +120,7 @@ export default function PrivacyPage() {
                 Si tenés preguntas sobre esta política de privacidad o sobre cómo manejamos tu información, podés contactarnos en:
               </p>
               <ul>
-                <li>Email: <a href="mailto:hola@tecnodespegue.com">hola@tecnodespegue.com</a></li>
+                <li>Email: <a href="mailto:contacto@tecnodespegue.com">contacto@tecnodespegue.com</a></li>
               </ul>
             </ScrollReveal>
 

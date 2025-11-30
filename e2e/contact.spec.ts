@@ -44,7 +44,7 @@ test.describe('Contact Form', () => {
 
   test('should display contact information', async ({ page }) => {
     // Check contact info is displayed
-    await expect(page.getByText('hola@tecnodespegue.com')).toBeVisible();
+    await expect(page.getByText('contacto@tecnodespegue.com')).toBeVisible();
     await expect(page.getByText(/\+54 2334 409-838/)).toBeVisible();
   });
 });

@@ -29,7 +29,7 @@ export async function GET() {
       <description><![CDATA[${post.description}]]></description>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
       <category>${post.category}</category>
-      <author>hola@tecnodespegue.com (${post.author?.name || 'TecnoDespegue'})</author>
+      <author>contacto@tecnodespegue.com (${post.author?.name || 'TecnoDespegue'})</author>
     </item>`
       )
       .join('')}

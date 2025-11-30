@@ -264,10 +264,10 @@ export function Header() {
                   ¿Listo para empezar?
                 </p>
                 <a
-                  href="mailto:hola@tecnodespegue.com"
+                  href="mailto:contacto@tecnodespegue.com"
                   className="text-2xl font-bold text-accent hover:underline"
                 >
-                  hola@tecnodespegue.com
+                  contacto@tecnodespegue.com
                 </a>
               </motion.div>
             </nav>
