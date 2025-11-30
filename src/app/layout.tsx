@@ -1,13 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Providers } from './providers';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { Cursor } from '@/components/animations/Cursor';
+import { ClientLayout } from '@/components/layout/ClientLayout';
 import { Analytics } from '@/components/Analytics';
-import { CookieConsent } from '@/components/CookieConsent';
-import { SkipLink } from '@/components/SkipLink';
-import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration';
 import './globals.css';
 
 const geistSans = Geist({
@@ -103,22 +98,9 @@ export default function RootLayout({
       <body className="antialiased gradient-mesh">
         <Analytics />
         <Providers>
-          {/* Skip link for accessibility */}
-          <SkipLink />
-
-          {/* Noise texture overlay */}
-          <div className="noise" aria-hidden="true" />
-
-          {/* Custom cursor */}
-          <Cursor />
-
-          <Header />
-          <main id="main-content" className="min-h-screen" role="main">
+          <ClientLayout>
             {children}
-          </main>
-          <Footer />
-          <CookieConsent />
-          <ServiceWorkerRegistration />
+          </ClientLayout>
         </Providers>
       </body>
     </html>
