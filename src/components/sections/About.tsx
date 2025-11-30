@@ -30,15 +30,16 @@ export function About() {
           <FadeIn>
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-8">
               <motion.div
-                className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-accent/20 flex-shrink-0"
+                className="relative flex-shrink-0"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
                 <Image
                   src="/images/rene-kuhm.jpg"
                   alt="René Kuhm - Desarrollador FullStack"
-                  fill
-                  className="object-cover"
+                  width={160}
+                  height={160}
+                  className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-accent/20"
                   priority
                 />
               </motion.div>

@@ -22,10 +22,11 @@ const footerLinks = {
     { href: '/terms', label: 'Términos' },
   ],
   social: [
-    { href: 'https://twitter.com', label: 'Twitter' },
-    { href: 'https://instagram.com', label: 'Instagram' },
-    { href: 'https://linkedin.com', label: 'LinkedIn' },
-    { href: 'https://dribbble.com', label: 'Dribbble' },
+    { href: 'https://github.com/Rene-Kuhm', label: 'GitHub', icon: 'G' },
+    { href: 'https://www.linkedin.com/in/rene-kuhm-fullstack/', label: 'LinkedIn', icon: 'L' },
+    { href: 'https://www.youtube.com/@Tecnodespegue', label: 'YouTube', icon: 'Y' },
+    { href: 'https://www.instagram.com/renekuhm/', label: 'Instagram', icon: 'I' },
+    { href: 'https://www.facebook.com/profile.php?id=61583085119702', label: 'Facebook', icon: 'F' },
   ],
 };
 
