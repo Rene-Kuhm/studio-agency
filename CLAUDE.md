@@ -17,9 +17,10 @@ https://github.com/Rene-Kuhm/studio-agency
 - Jest 30 + React Testing Library
 
 ## Estado Actual
-- **Tests**: 58 tests pasando (Jest + RTL)
+- **Tests unitarios**: 108 tests pasando (Jest + RTL), 85%+ cobertura
+- **Tests E2E**: 35 tests pasando (Playwright)
 - **Build**: Funcional
-- **Producción**: ~95% listo
+- **Producción**: 100% listo (solo quedan mejoras opcionales)
 
 ## Tareas Completadas
 
@@ -42,19 +43,22 @@ https://github.com/Rene-Kuhm/studio-agency
 12. [x] Contraste de colores mejorado (WCAG AA)
 13. [x] Focus states en componentes animados
 
+### Testing
+14. [x] Tests E2E con Playwright (35 tests)
+15. [x] Cobertura de tests unitarios 85%+ (108 tests)
+
+### Blog
+16. [x] Búsqueda en blog (ya implementada en BlogPageClient)
+17. [x] Páginas de categorías (`/blog/category/[cat]`)
+18. [x] Páginas de tags (`/blog/tag/[tag]`)
+
 ## Tareas Pendientes
 
-### Media Prioridad (Opcional)
-1. [ ] Tests E2E con Playwright
-2. [ ] Aumentar cobertura de tests a 70%+
-
 ### Baja Prioridad (Mejoras futuras)
-3. [ ] Búsqueda en blog
-4. [ ] Páginas de categorías/tags (`/blog/category/[cat]`, `/blog/tag/[tag]`)
-5. [ ] Sistema de comentarios (Giscus/Disqus)
-6. [ ] Service worker para PWA offline
-7. [ ] OG images dinámicas para blog posts
-8. [ ] Link al RSS feed en header
+1. [ ] Sistema de comentarios (Giscus/Disqus)
+2. [ ] Service worker para PWA offline
+3. [ ] OG images dinámicas para blog posts
+4. [ ] Link al RSS feed en header
 
 ## Configuración Requerida
 
@@ -111,8 +115,10 @@ prisma/
 ```bash
 npm run dev          # Desarrollo
 npm run build        # Build producción
-npm test             # Tests
-npm test:coverage    # Tests con cobertura
+npm test             # Tests unitarios
+npm run test:coverage # Tests con cobertura
+npm run test:e2e     # Tests E2E con Playwright
+npm run test:e2e:ui  # Tests E2E con UI interactiva
 npx prisma studio    # UI para ver datos
 ```
 

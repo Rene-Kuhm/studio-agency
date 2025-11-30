@@ -35,11 +35,6 @@ export function PostCard({ post }: PostCardProps) {
           </div>
         </div>
 
-        {/* Category */}
-        <span className="inline-block px-3 py-1 text-xs font-medium bg-secondary rounded-full mb-3">
-          {post.category}
-        </span>
-
         {/* Title */}
         <h3 className="text-2xl font-bold tracking-tight group-hover:text-accent transition-colors line-clamp-2">
           {post.title}
@@ -57,6 +52,25 @@ export function PostCard({ post }: PostCardProps) {
           <span>{post.readingTime} min de lectura</span>
         </div>
       </Link>
+
+      {/* Category & Tags - outside of main link for separate clickability */}
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <Link
+          href={`/blog/category/${encodeURIComponent(post.category.toLowerCase())}`}
+          className="inline-block px-3 py-1 text-xs font-medium bg-accent/10 text-accent hover:bg-accent hover:text-accent-foreground rounded-full transition-colors"
+        >
+          {post.category}
+        </Link>
+        {post.tags.slice(0, 2).map((tag) => (
+          <Link
+            key={tag}
+            href={`/blog/tag/${encodeURIComponent(tag.toLowerCase())}`}
+            className="inline-block px-2 py-1 text-xs text-muted-foreground hover:text-foreground bg-secondary hover:bg-secondary/80 rounded-full transition-colors"
+          >
+            #{tag}
+          </Link>
+        ))}
+      </div>
     </motion.article>
   );
 }
