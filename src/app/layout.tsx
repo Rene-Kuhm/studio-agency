@@ -20,6 +20,9 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+// Version for cache busting (update when changing icons)
+const ICON_VERSION = 'v2';
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://tecnodespegue.com'),
   title: {
@@ -40,6 +43,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'TecnoDespegue' }],
   manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: `/icon?${ICON_VERSION}`, sizes: '32x32', type: 'image/png' },
+      { url: `/icon.svg?${ICON_VERSION}`, type: 'image/svg+xml' },
+    ],
+    shortcut: `/icon?${ICON_VERSION}`,
+    apple: [
+      { url: `/apple-icon?${ICON_VERSION}`, sizes: '180x180', type: 'image/png' },
+    ],
+  },
   alternates: {
     types: {
       'application/rss+xml': '/feed.xml',
