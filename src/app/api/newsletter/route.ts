@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { logger } from '@/lib/logger';
 
 // Rate limiting map
 const rateLimit = new Map<string, { count: number; resetTime: number }>();
@@ -73,10 +74,9 @@ export async function POST(request: NextRequest) {
     subscribers.add(email.toLowerCase());
 
     // Log the subscription
-    console.log('📬 New newsletter subscription:', {
+    logger.formSubmission('newsletter', {
       email: email.toLowerCase(),
       timestamp: new Date().toISOString(),
-      ip,
     });
 
     // In production, you would:
@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
       message: '¡Gracias por suscribirte! Pronto recibirás nuestras novedades.',
     });
   } catch (error) {
-    console.error('Newsletter subscription error:', error);
+    logger.error('Newsletter subscription error', error);
     return NextResponse.json(
       { error: 'Ocurrió un error. Por favor, intentá de nuevo.' },
       { status: 500 }

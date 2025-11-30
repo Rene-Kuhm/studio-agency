@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { logger } from '@/lib/logger';
 
 // Rate limiting map (in production, use Redis or similar)
 const rateLimit = new Map<string, { count: number; resetTime: number }>();
@@ -110,7 +111,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Log the contact (in production, send email or save to database)
-    console.log('📧 New contact form submission:', sanitizedData);
+    logger.formSubmission('contact', sanitizedData);
 
     // Here you would typically:
     // 1. Send an email notification (using Resend, SendGrid, etc.)
@@ -144,7 +145,7 @@ export async function POST(request: NextRequest) {
       message: '¡Gracias por tu mensaje! Te responderemos pronto.',
     });
   } catch (error) {
-    console.error('Contact form error:', error);
+    logger.error('Contact form error', error);
     return NextResponse.json(
       { error: 'Ocurrió un error al enviar el mensaje. Por favor, intentá de nuevo.' },
       { status: 500 }

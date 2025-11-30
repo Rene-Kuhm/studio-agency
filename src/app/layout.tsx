@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Cursor } from '@/components/animations/Cursor';
 import { Analytics } from '@/components/Analytics';
 import { CookieConsent } from '@/components/CookieConsent';
+import { SkipLink } from '@/components/SkipLink';
 import './globals.css';
 
 const geistSans = Geist({
@@ -79,14 +80,19 @@ export default function RootLayout({
       <body className="antialiased gradient-mesh">
         <Analytics />
         <Providers>
+          {/* Skip link for accessibility */}
+          <SkipLink />
+
           {/* Noise texture overlay */}
-          <div className="noise" />
+          <div className="noise" aria-hidden="true" />
 
           {/* Custom cursor */}
           <Cursor />
 
           <Header />
-          <main className="min-h-screen">{children}</main>
+          <main id="main-content" className="min-h-screen" role="main">
+            {children}
+          </main>
           <Footer />
           <CookieConsent />
         </Providers>
