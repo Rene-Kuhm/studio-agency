@@ -2,6 +2,7 @@ import { Hero } from '@/components/sections/Hero';
 import { Services } from '@/components/sections/Services';
 import { Work } from '@/components/sections/Work';
 import { About } from '@/components/sections/About';
+import { Testimonials } from '@/components/sections/Testimonials';
 import { CTA } from '@/components/sections/CTA';
 
 export default function HomePage() {
@@ -11,6 +12,7 @@ export default function HomePage() {
       <Services />
       <Work />
       <About />
+      <Testimonials />
       <CTA />
     </>
   );

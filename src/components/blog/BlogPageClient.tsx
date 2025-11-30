@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
@@ -8,9 +8,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
 import { SplitText } from '@/components/animations/SplitText';
 import { HoverCard } from '@/components/animations/HoverCard';
-import { MagneticButton } from '@/components/animations/MagneticButton';
 import { MorphingBlob } from '@/components/animations/MorphingBlob';
 import { Marquee } from '@/components/animations/Marquee';
+import { NewsletterForm } from '@/components/NewsletterForm';
 import type { PostMeta } from '@/lib/blog/types';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -29,11 +29,15 @@ interface BlogPageClientProps {
   categories: string[];
 }
 
+const POSTS_PER_PAGE = 6;
+
 export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
   const heroRef = useRef<HTMLElement>(null);
   const postsRef = useRef<HTMLDivElement>(null);
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [hoveredPost, setHoveredPost] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -43,9 +47,33 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  const filteredPosts = activeCategory === 'Todos'
-    ? posts
-    : posts.filter((post) => post.category === activeCategory);
+  // Filter posts by category and search query
+  const filteredPosts = posts.filter((post) => {
+    const matchesCategory = activeCategory === 'Todos' || post.category === activeCategory;
+    const matchesSearch = searchQuery === '' ||
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchesCategory && matchesSearch;
+  });
+
+  // Pagination
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const paginatedPosts = filteredPosts.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE
+  );
+
+  // Reset page when filters change
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(1);
+  };
 
   useEffect(() => {
     if (!postsRef.current) return;
@@ -74,7 +102,7 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
-  }, [activeCategory]);
+  }, [activeCategory, searchQuery, currentPage]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('es-AR', {
@@ -160,31 +188,66 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
               Compartimos lo que aprendemos sobre diseño, desarrollo y el mundo digital.
             </motion.p>
 
+            {/* Search bar */}
+            <motion.div
+              className="mt-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
+            >
+              <div className="relative max-w-md">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  placeholder="Buscar artículos..."
+                  className="w-full px-5 py-3 pl-12 bg-secondary/50 border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-accent transition-colors"
+                />
+                <svg
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                {searchQuery && (
+                  <button
+                    onClick={() => handleSearchChange('')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            </motion.div>
+
             {/* Categories filter */}
             <motion.div
-              className="mt-12 flex flex-wrap gap-3"
+              className="mt-6 flex flex-wrap gap-3"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.2 }}
             >
               {categories.map((category, i) => (
-                <MagneticButton key={category} strength={0.2}>
-                  <motion.button
-                    onClick={() => setActiveCategory(category)}
-                    className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                      activeCategory === category
-                        ? 'bg-foreground text-background'
-                        : 'bg-secondary hover:bg-secondary/80'
-                    }`}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: 1.3 + i * 0.05 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {category}
-                  </motion.button>
-                </MagneticButton>
+                <motion.button
+                  key={category}
+                  onClick={() => handleCategoryChange(category)}
+                  className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                    activeCategory === category
+                      ? 'bg-foreground text-background'
+                      : 'bg-secondary hover:bg-secondary/80'
+                  }`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 1.3 + i * 0.05 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {category}
+                </motion.button>
               ))}
             </motion.div>
           </div>
@@ -194,8 +257,19 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
       {/* Posts Grid */}
       <section className="pb-32">
         <div ref={postsRef} className="container mx-auto px-6">
+          {/* Results count */}
+          {searchQuery && (
+            <motion.p
+              className="mb-6 text-muted-foreground"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              {filteredPosts.length} {filteredPosts.length === 1 ? 'resultado' : 'resultados'} para "{searchQuery}"
+            </motion.p>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post) => {
+            {paginatedPosts.map((post) => {
               const postColor = getPostColor(post.category);
               return (
                 <HoverCard
@@ -301,8 +375,73 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
               animate={{ opacity: 1, y: 0 }}
             >
               <p className="text-xl text-muted-foreground">
-                No hay artículos en esta categoría todavía.
+                {searchQuery
+                  ? 'No se encontraron artículos para tu búsqueda.'
+                  : 'No hay artículos en esta categoría todavía.'}
               </p>
+              {searchQuery && (
+                <button
+                  onClick={() => handleSearchChange('')}
+                  className="mt-4 text-accent hover:underline"
+                >
+                  Limpiar búsqueda
+                </button>
+              )}
+            </motion.div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <motion.div
+              className="flex items-center justify-center gap-2 mt-16"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              {/* Previous button */}
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                  currentPage === 1
+                    ? 'bg-secondary/50 text-muted-foreground cursor-not-allowed'
+                    : 'bg-secondary hover:bg-accent hover:text-accent-foreground'
+                }`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Page numbers */}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-medium transition-colors ${
+                    currentPage === page
+                      ? 'bg-foreground text-background'
+                      : 'bg-secondary hover:bg-accent hover:text-accent-foreground'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+
+              {/* Next button */}
+              <button
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                  currentPage === totalPages
+                    ? 'bg-secondary/50 text-muted-foreground cursor-not-allowed'
+                    : 'bg-secondary hover:bg-accent hover:text-accent-foreground'
+                }`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </motion.div>
           )}
         </div>
@@ -332,27 +471,15 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
               Recibí las últimas tendencias, tips y recursos directamente en tu inbox.
             </motion.p>
 
-            <motion.form
-              className="mt-8 flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+            <motion.div
+              className="mt-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <input
-                type="email"
-                placeholder="tu@email.com"
-                className="flex-1 px-5 py-3 bg-background/10 border border-background/20 rounded-xl text-background placeholder:text-background/40 focus:outline-none focus:border-accent transition-colors"
-              />
-              <MagneticButton strength={0.3}>
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-accent text-accent-foreground rounded-xl font-medium hover:bg-accent/90 transition-colors"
-                >
-                  Suscribirse
-                </button>
-              </MagneticButton>
-            </motion.form>
+              <NewsletterForm variant="dark" />
+            </motion.div>
           </ScrollReveal>
         </div>
       </section>

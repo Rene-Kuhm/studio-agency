@@ -4,6 +4,7 @@ import { Providers } from './providers';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Cursor } from '@/components/animations/Cursor';
+import { Analytics } from '@/components/Analytics';
 import './globals.css';
 
 const geistSans = Geist({
@@ -70,6 +71,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="antialiased gradient-mesh">
+        <Analytics />
         <Providers>
           {/* Noise texture overlay */}
           <div className="noise" />

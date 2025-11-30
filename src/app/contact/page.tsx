@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
 import { SplitText } from '@/components/animations/SplitText';
@@ -58,6 +58,40 @@ const socials = [
   { name: 'Dribbble', href: '#' },
 ];
 
+// Generate a simple math captcha
+function generateCaptcha() {
+  const operations = ['+', '-', 'x'];
+  const operation = operations[Math.floor(Math.random() * operations.length)];
+  let num1: number, num2: number, answer: number;
+
+  switch (operation) {
+    case '+':
+      num1 = Math.floor(Math.random() * 10) + 1;
+      num2 = Math.floor(Math.random() * 10) + 1;
+      answer = num1 + num2;
+      break;
+    case '-':
+      num1 = Math.floor(Math.random() * 10) + 5;
+      num2 = Math.floor(Math.random() * num1);
+      answer = num1 - num2;
+      break;
+    case 'x':
+      num1 = Math.floor(Math.random() * 5) + 1;
+      num2 = Math.floor(Math.random() * 5) + 1;
+      answer = num1 * num2;
+      break;
+    default:
+      num1 = 2;
+      num2 = 2;
+      answer = 4;
+  }
+
+  return {
+    question: `${num1} ${operation} ${num2} = ?`,
+    answer: answer.toString(),
+  };
+}
+
 export default function ContactPage() {
   const heroRef = useRef<HTMLElement>(null);
   const [formData, setFormData] = useState({
@@ -73,6 +107,20 @@ export default function ContactPage() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [captcha, setCaptcha] = useState({ question: '', answer: '' });
+  const [captchaInput, setCaptchaInput] = useState('');
+  const [captchaError, setCaptchaError] = useState(false);
+
+  // Generate captcha on mount
+  const refreshCaptcha = useCallback(() => {
+    setCaptcha(generateCaptcha());
+    setCaptchaInput('');
+    setCaptchaError(false);
+  }, []);
+
+  useEffect(() => {
+    refreshCaptcha();
+  }, [refreshCaptcha]);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -84,9 +132,19 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate captcha first
+    if (captchaInput !== captcha.answer) {
+      setCaptchaError(true);
+      setErrorMessage('La respuesta de verificación es incorrecta. Por favor, intentá de nuevo.');
+      refreshCaptcha();
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
+    setCaptchaError(false);
 
     try {
       const response = await fetch('/api/contact', {
@@ -113,6 +171,7 @@ export default function ContactPage() {
         message: '',
         website: '',
       });
+      refreshCaptcha();
     } catch (error) {
       setSubmitStatus('error');
       setErrorMessage(error instanceof Error ? error.message : 'Error al enviar el mensaje');
@@ -450,6 +509,56 @@ export default function ContactPage() {
                       onBlur={() => setFocusedField(null)}
                       className="w-full px-4 py-3.5 bg-background border-2 border-border rounded-xl focus:outline-none focus:border-accent transition-colors resize-none"
                     />
+                  </div>
+
+                  {/* Math CAPTCHA */}
+                  <div className="relative">
+                    <div className="flex items-center gap-4">
+                      <div className="flex-1">
+                        <label
+                          htmlFor="captcha"
+                          className="block text-sm font-medium mb-2 text-muted-foreground"
+                        >
+                          Verificación: ¿Cuánto es{' '}
+                          <span className="text-accent font-bold">{captcha.question}</span>
+                        </label>
+                        <div className="flex gap-3">
+                          <input
+                            type="text"
+                            id="captcha"
+                            name="captcha"
+                            required
+                            value={captchaInput}
+                            onChange={(e) => {
+                              setCaptchaInput(e.target.value);
+                              setCaptchaError(false);
+                            }}
+                            placeholder="Tu respuesta"
+                            className={`flex-1 px-4 py-3.5 bg-background border-2 rounded-xl focus:outline-none transition-colors ${
+                              captchaError
+                                ? 'border-red-500 focus:border-red-500'
+                                : 'border-border focus:border-accent'
+                            }`}
+                            autoComplete="off"
+                          />
+                          <button
+                            type="button"
+                            onClick={refreshCaptcha}
+                            className="px-4 py-3.5 bg-secondary rounded-xl hover:bg-secondary/80 transition-colors"
+                            title="Nueva pregunta"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                          </button>
+                        </div>
+                        {captchaError && (
+                          <p className="mt-2 text-sm text-red-500">
+                            Respuesta incorrecta. Intentá de nuevo.
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   </div>
 
                   {/* Submit */}

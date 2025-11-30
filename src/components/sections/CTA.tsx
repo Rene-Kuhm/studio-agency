@@ -169,10 +169,10 @@ export function CTA() {
           >
             o escribinos a{' '}
             <a
-              href="mailto:hola@studio.com"
+              href="mailto:hola@tecnodespegue.com"
               className="text-accent-foreground hover:underline underline-offset-4 transition-colors"
             >
-              hola@studio.com
+              hola@tecnodespegue.com
             </a>
           </motion.p>
         </div>
