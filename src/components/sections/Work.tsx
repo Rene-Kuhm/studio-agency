@@ -16,39 +16,43 @@ gsap.registerPlugin(ScrollTrigger);
 const projects = [
   {
     id: 1,
-    title: 'Nebula App',
-    category: 'Diseño Web & Desarrollo',
-    description: 'Plataforma SaaS para gestión de proyectos creativos',
+    title: 'Acuamarina Cerámica',
+    category: 'E-commerce',
+    description: 'Tienda online para venta de cerámicas artesanales',
     year: '2024',
     color: '#a67c52',
-    tags: ['Next.js', 'Framer Motion', 'Prisma'],
+    tags: ['Next.js', 'TypeScript', 'Tailwind'],
+    url: 'https://github.com/Rene-Kuhm/acuamarina-ceramica',
   },
   {
     id: 2,
-    title: 'Aurora Brand',
-    category: 'Branding & Identidad',
-    description: 'Identidad visual completa para startup fintech',
+    title: 'Dashboard Enterprise',
+    category: 'Producto Digital',
+    description: 'Dashboard profesional para gestión empresarial',
     year: '2024',
     color: '#c9a87c',
-    tags: ['Branding', 'UI Design', 'Motion'],
+    tags: ['TypeScript', 'React', 'Charts'],
+    url: 'https://github.com/Rene-Kuhm/dashboard-enterprice',
   },
   {
     id: 3,
-    title: 'Vertex Commerce',
+    title: 'E-commerce FullStack',
     category: 'E-commerce',
-    description: 'Tienda online premium para marca de moda',
-    year: '2023',
+    description: 'Solución completa de comercio electrónico',
+    year: '2024',
     color: '#8b7355',
-    tags: ['Shopify', 'Custom Theme', 'UX'],
+    tags: ['JavaScript', 'Node.js', 'MongoDB'],
+    url: 'https://github.com/Rene-Kuhm/E-commerce-FullStack',
   },
   {
     id: 4,
-    title: 'Pulse Dashboard',
-    category: 'Producto Digital',
-    description: 'Dashboard de analytics para equipos de marketing',
-    year: '2023',
+    title: 'Freelance Agency',
+    category: 'Sitio Web',
+    description: 'Website para agencia freelance con portfolio',
+    year: '2024',
     color: '#d4a574',
-    tags: ['React', 'D3.js', 'Real-time'],
+    tags: ['Next.js', 'Framer Motion', 'TypeScript'],
+    url: 'https://github.com/Rene-Kuhm/freelance-agency',
   },
 ];
 
@@ -125,9 +129,11 @@ export function Work() {
         {/* Projects list */}
         <div className="space-y-2">
           {projects.map((project, index) => (
-            <Link
+            <a
               key={project.id}
-              href={`/work/${project.id}`}
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="project-item block"
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
@@ -218,7 +224,7 @@ export function Work() {
                   )}
                 </AnimatePresence>
               </motion.div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

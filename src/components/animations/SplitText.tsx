@@ -49,15 +49,16 @@ export function SplitText({
         .map((word) => `<span class="word"><span class="word-inner">${word}</span></span>`)
         .join(' ');
     } else {
-      // chars animations
+      // chars animations - wrap words to preserve line breaks
       html = text
-        .split('')
-        .map((char) =>
-          char === ' '
-            ? ' '
-            : `<span class="char">${char}</span>`
+        .split(' ')
+        .map((word) =>
+          `<span class="word-wrap" style="display:inline-block;white-space:nowrap">${word
+            .split('')
+            .map((char) => `<span class="char" style="display:inline-block">${char}</span>`)
+            .join('')}</span>`
         )
-        .join('');
+        .join(' ');
     }
 
     container.innerHTML = html;

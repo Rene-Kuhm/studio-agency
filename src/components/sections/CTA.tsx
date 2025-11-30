@@ -85,7 +85,7 @@ export function CTA() {
           <SplitText
             as="h2"
             animation="chars-wave"
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-accent-foreground"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-tight text-accent-foreground"
             trigger="scroll"
             stagger={0.02}
           >

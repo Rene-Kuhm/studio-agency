@@ -18,57 +18,63 @@ gsap.registerPlugin(ScrollTrigger);
 const projects = [
   {
     id: 1,
-    title: 'Nebula App',
-    category: 'Diseño Web & Desarrollo',
-    description: 'Plataforma SaaS para gestión de proyectos creativos',
+    title: 'Acuamarina Cerámica',
+    category: 'E-commerce',
+    description: 'Tienda online para venta de cerámicas artesanales con catálogo interactivo',
     year: '2024',
     color: '#a67c52',
-    tags: ['Next.js', 'Framer Motion', 'Prisma'],
+    tags: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    url: 'https://github.com/Rene-Kuhm/acuamarina-ceramica',
   },
   {
     id: 2,
-    title: 'Aurora Brand',
-    category: 'Branding & Identidad',
-    description: 'Identidad visual completa para startup fintech',
+    title: 'Tienda Cerámica',
+    category: 'E-commerce',
+    description: 'Plataforma e-commerce con carrito de compras y gestión de inventario',
     year: '2024',
     color: '#c9a87c',
-    tags: ['Branding', 'UI Design', 'Motion'],
+    tags: ['Astro', 'E-commerce', 'UI/UX'],
+    url: 'https://github.com/Rene-Kuhm/tienda-ceramica',
   },
   {
     id: 3,
-    title: 'Vertex Commerce',
+    title: 'E-commerce FullStack',
     category: 'E-commerce',
-    description: 'Tienda online premium para marca de moda',
-    year: '2023',
+    description: 'Solución completa de comercio electrónico con panel de administración',
+    year: '2024',
     color: '#8b7355',
-    tags: ['Shopify', 'Custom Theme', 'UX'],
+    tags: ['JavaScript', 'Node.js', 'MongoDB'],
+    url: 'https://github.com/Rene-Kuhm/E-commerce-FullStack',
   },
   {
     id: 4,
-    title: 'Pulse Dashboard',
+    title: 'Dashboard Enterprise',
     category: 'Producto Digital',
-    description: 'Dashboard de analytics para equipos de marketing',
-    year: '2023',
+    description: 'Dashboard profesional para gestión empresarial con analytics en tiempo real',
+    year: '2024',
     color: '#d4a574',
-    tags: ['React', 'D3.js', 'Real-time'],
+    tags: ['TypeScript', 'React', 'Charts'],
+    url: 'https://github.com/Rene-Kuhm/dashboard-enterprice',
   },
   {
     id: 5,
-    title: 'Nova Studio',
+    title: 'Freelance Agency',
     category: 'Sitio Web',
-    description: 'Website institucional para estudio de arquitectura',
-    year: '2023',
+    description: 'Website para agencia freelance con portfolio y formulario de contacto',
+    year: '2024',
     color: '#b8956c',
-    tags: ['Next.js', 'GSAP', '3D'],
+    tags: ['Next.js', 'TypeScript', 'Framer Motion'],
+    url: 'https://github.com/Rene-Kuhm/freelance-agency',
   },
   {
     id: 6,
-    title: 'Spark Agency',
-    category: 'Branding & Web',
-    description: 'Rebranding y nuevo sitio web para agencia de publicidad',
-    year: '2023',
+    title: 'Pomodoro Timer',
+    category: 'Aplicación Web',
+    description: 'Aplicación de productividad con técnica Pomodoro y estadísticas',
+    year: '2024',
     color: '#9a7b5a',
-    tags: ['Branding', 'Web Design', 'Motion'],
+    tags: ['TypeScript', 'React', 'PWA'],
+    url: 'https://github.com/Rene-Kuhm/pomodoro-timer',
   },
 ];
 
@@ -227,8 +233,10 @@ export default function WorkPage() {
                 tilt
                 scale
               >
-                <Link
-                  href={`/work/${project.id}`}
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group block"
                   onMouseEnter={() => setHoveredProject(project.id)}
                   onMouseLeave={() => setHoveredProject(null)}
@@ -291,7 +299,7 @@ export default function WorkPage() {
                           }}
                           transition={{ duration: 0.3, delay: 0.1 }}
                         >
-                          <span>Ver proyecto</span>
+                          <span>Ver en GitHub</span>
                           <motion.div
                             animate={{ x: [0, 5, 0] }}
                             transition={{ duration: 1.5, repeat: Infinity }}
@@ -353,7 +361,7 @@ export default function WorkPage() {
                       ))}
                     </div>
                   </div>
-                </Link>
+                </a>
               </HoverCard>
             ))}
           </div>
