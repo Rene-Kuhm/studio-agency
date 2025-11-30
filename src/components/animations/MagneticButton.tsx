@@ -37,7 +37,7 @@ export function MagneticButton({
   return (
     <motion.div
       ref={ref}
-      className={cn('inline-block', className)}
+      className={cn('inline-block magnetic-button focus-visible:outline-none', className)}
       onMouseMove={handleMouse}
       onMouseLeave={handleMouseLeave}
       animate={{ x: position.x, y: position.y }}

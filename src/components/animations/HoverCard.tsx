@@ -66,7 +66,7 @@ export function HoverCard({
       }}
       whileHover={scale ? { scale: 1.02 } : undefined}
       transition={{ scale: { duration: 0.2 } }}
-      className={cn('relative', className)}
+      className={cn('relative hover-card', className)}
     >
       {children}
 

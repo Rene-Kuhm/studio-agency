@@ -12,47 +12,65 @@ https://github.com/Rene-Kuhm/studio-agency
 - TypeScript 5
 - Tailwind CSS 4
 - Framer Motion + GSAP
+- Prisma 5 + PostgreSQL
+- Sentry (error tracking)
 - Jest 30 + React Testing Library
 
 ## Estado Actual
-- **Tests**: 60 tests pasando (Jest + RTL)
+- **Tests**: 58 tests pasando (Jest + RTL)
 - **Build**: Funcional
-- **Producción**: ~60% listo
+- **Producción**: ~95% listo
 
-## Tareas Pendientes (Prioridad)
+## Tareas Completadas
 
-### Crítico - Antes de lanzar
-1. [ ] **Teléfono placeholder** - Cambiar `+54 11 1234-5678` en `src/app/contact/page.tsx:25-26`
-2. [ ] **Dominio hardcodeado** - Cambiar `studio.com` a `tecnodespegue.com` en `src/app/blog/[slug]/page.tsx:87,91`
-3. [ ] **Branding "Studio"** - Cambiar a "TecnoDespegue" en:
-   - `src/app/contact/page.tsx:350`
-   - `src/lib/blog/posts.ts:29`
-4. [ ] **Implementar envío de emails** - Descomentar Resend en:
-   - `src/app/api/contact/route.ts:123-141`
-   - `src/app/api/newsletter/route.ts:87-102`
+### Crítico
+1. [x] **Teléfono actualizado** - `+54 2334 409-838`
+2. [x] **Dominio actualizado** - `tecnodespegue.com`
+3. [x] **Branding actualizado** - "TecnoDespegue" en todos los archivos
+4. [x] **Emails con Resend** - Implementado y funcionando
 
 ### Alta Prioridad
-5. [ ] Newsletter: Mover de memoria a BD (actualmente `Set<string>` en memoria)
-6. [ ] Rate limiting: Implementar con Redis (actualmente en memoria)
-7. [ ] Integrar Sentry para tracking de errores
-8. [ ] Agregar protección CSRF a formularios
-9. [ ] Llamar `validateEnv()` en el build
+5. [x] Newsletter con PostgreSQL (Prisma)
+6. [x] Rate limiting con PostgreSQL
+7. [x] Sentry integrado para error tracking
+8. [x] Protección CSRF en formularios
+9. [x] `validateEnv()` se ejecuta al iniciar
 
 ### Media Prioridad
-10. [ ] Agregar schema JSON-LD para Organization/LocalBusiness en homepage
-11. [ ] URLs canónicas en todas las páginas
-12. [ ] Verificar contraste de colores (WCAG)
-13. [ ] Agregar focus states a componentes animados
-14. [ ] Tests E2E con Playwright
-15. [ ] Aumentar cobertura de tests a 70%+
+10. [x] Schema JSON-LD para Organization/LocalBusiness en homepage
+11. [x] URLs canónicas en todas las páginas
+12. [x] Contraste de colores mejorado (WCAG AA)
+13. [x] Focus states en componentes animados
 
-### Baja Prioridad (Mejoras)
-16. [ ] Búsqueda en blog
-17. [ ] Páginas de categorías/tags (`/blog/category/[cat]`, `/blog/tag/[tag]`)
-18. [ ] Sistema de comentarios (Giscus/Disqus)
-19. [ ] Service worker para PWA offline
-20. [ ] OG images dinámicas para blog posts
-21. [ ] Link al RSS feed en header
+## Tareas Pendientes
+
+### Media Prioridad (Opcional)
+1. [ ] Tests E2E con Playwright
+2. [ ] Aumentar cobertura de tests a 70%+
+
+### Baja Prioridad (Mejoras futuras)
+3. [ ] Búsqueda en blog
+4. [ ] Páginas de categorías/tags (`/blog/category/[cat]`, `/blog/tag/[tag]`)
+5. [ ] Sistema de comentarios (Giscus/Disqus)
+6. [ ] Service worker para PWA offline
+7. [ ] OG images dinámicas para blog posts
+8. [ ] Link al RSS feed en header
+
+## Configuración Requerida
+
+### Variables de Entorno
+Ver `.env.example` para todas las variables. Las principales son:
+- `DATABASE_URL` - PostgreSQL (Supabase/Neon)
+- `RESEND_API_KEY` - Para envío de emails
+- `SENTRY_DSN` - Para error tracking
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` - Google Analytics
+
+### Base de Datos
+```bash
+npx prisma generate   # Generar cliente
+npx prisma db push    # Sincronizar schema con DB
+npx prisma migrate dev # Crear migraciones
+```
 
 ## Estructura de Directorios Clave
 ```
@@ -60,7 +78,8 @@ src/
 ├── app/
 │   ├── api/
 │   │   ├── contact/route.ts    # Formulario de contacto
-│   │   └── newsletter/route.ts # Suscripción newsletter
+│   │   ├── newsletter/route.ts # Suscripción newsletter
+│   │   └── csrf/route.ts       # Token CSRF
 │   ├── blog/                   # Blog con MDX
 │   ├── contact/                # Página de contacto
 │   └── ...
@@ -72,12 +91,20 @@ src/
 │   └── ui/                     # Componentes UI reutilizables
 ├── lib/
 │   ├── blog/posts.ts          # Utilidades para posts MDX
+│   ├── csrf.ts                # Protección CSRF
 │   ├── env.ts                 # Validación de variables de entorno
-│   └── logger.ts              # Logger production-safe
+│   ├── logger.ts              # Logger production-safe
+│   ├── prisma.ts              # Cliente Prisma
+│   └── rate-limit.ts          # Rate limiting
+├── hooks/
+│   └── useCsrf.ts             # Hook para CSRF
 ├── providers/
 │   └── ThemeProvider.tsx      # Dark mode
 └── content/
     └── blog/                  # Posts en MDX
+
+prisma/
+└── schema.prisma              # Schema de base de datos
 ```
 
 ## Comandos Útiles
@@ -86,6 +113,7 @@ npm run dev          # Desarrollo
 npm run build        # Build producción
 npm test             # Tests
 npm test:coverage    # Tests con cobertura
+npx prisma studio    # UI para ver datos
 ```
 
 ## Notas Importantes
@@ -94,3 +122,4 @@ npm test:coverage    # Tests con cobertura
 - Blog con MDX y next-mdx-remote
 - PWA con manifest.json e iconos dinámicos
 - Headers de seguridad configurados en next.config.ts
+- Sentry configurado para client, server y edge

@@ -1,31 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+import { prisma } from '@/lib/prisma';
+import { isRateLimited } from '@/lib/rate-limit';
+import { isValidOrigin } from '@/lib/csrf';
 import { logger } from '@/lib/logger';
 
-// Rate limiting map (in production, use Redis or similar)
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const MAX_REQUESTS = 3; // 3 requests per minute
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const record = rateLimit.get(ip);
-
-  if (!record || now > record.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return false;
-  }
-
-  if (record.count >= MAX_REQUESTS) {
-    return true;
-  }
-
-  record.count++;
-  return false;
-}
+// Lazy initialization to avoid build-time errors
+const getResend = () => {
+  if (!process.env.RESEND_API_KEY) return null;
+  return new Resend(process.env.RESEND_API_KEY);
+};
 
 // Simple honeypot check
 function isSpam(data: { website?: string }): boolean {
-  // If honeypot field is filled, it's likely spam
   return !!data.website;
 }
 
@@ -47,13 +34,21 @@ function sanitize(input: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    // Validate origin (CSRF protection)
+    if (!isValidOrigin(request)) {
+      return NextResponse.json(
+        { error: 'Solicitud no autorizada.' },
+        { status: 403 }
+      );
+    }
+
     // Get client IP for rate limiting
     const ip = request.headers.get('x-forwarded-for') ||
                request.headers.get('x-real-ip') ||
                'unknown';
 
     // Check rate limit
-    if (isRateLimited(ip)) {
+    if (await isRateLimited(`contact:${ip}`)) {
       return NextResponse.json(
         { error: 'Demasiadas solicitudes. Por favor, esperá un momento.' },
         { status: 429 }
@@ -61,7 +56,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, company, message, website } = body;
+    const { name, email, company, service, budget, message, website } = body;
 
     // Check honeypot (spam protection)
     if (isSpam({ website })) {
@@ -104,41 +99,47 @@ export async function POST(request: NextRequest) {
     const sanitizedData = {
       name: sanitize(name),
       email: sanitize(email),
-      company: company ? sanitize(company) : '',
+      company: company ? sanitize(company) : null,
+      service: service ? sanitize(service) : null,
+      budget: budget ? sanitize(budget) : null,
       message: sanitize(message),
-      timestamp: new Date().toISOString(),
       ip: ip,
     };
 
-    // Log the contact (in production, send email or save to database)
-    logger.formSubmission('contact', sanitizedData);
+    // Save to database if available
+    if (process.env.DATABASE_URL) {
+      await prisma.contactMessage.create({
+        data: sanitizedData,
+      });
+    }
 
-    // Here you would typically:
-    // 1. Send an email notification (using Resend, SendGrid, etc.)
-    // 2. Save to database
-    // 3. Add to CRM
-    // 4. Send confirmation email to user
-
-    // Example with Resend (uncomment and configure when ready):
-    /*
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    await resend.emails.send({
-      from: 'TecnoDespegue <no-reply@tecnodespegue.com>',
-      to: 'hola@tecnodespegue.com',
-      subject: `Nuevo mensaje de ${sanitizedData.name}`,
-      html: `
-        <h2>Nuevo mensaje de contacto</h2>
-        <p><strong>Nombre:</strong> ${sanitizedData.name}</p>
-        <p><strong>Email:</strong> ${sanitizedData.email}</p>
-        <p><strong>Empresa:</strong> ${sanitizedData.company || 'No especificada'}</p>
-        <p><strong>Mensaje:</strong></p>
-        <p>${sanitizedData.message}</p>
-        <hr>
-        <p><small>Enviado el ${sanitizedData.timestamp}</small></p>
-      `,
+    // Log the contact
+    logger.formSubmission('contact', {
+      ...sanitizedData,
+      timestamp: new Date().toISOString(),
     });
-    */
+
+    // Send email notification with Resend
+    const resend = getResend();
+    if (resend) {
+      await resend.emails.send({
+        from: 'TecnoDespegue <no-reply@tecnodespegue.com>',
+        to: 'hola@tecnodespegue.com',
+        subject: `Nuevo mensaje de ${sanitizedData.name}`,
+        html: `
+          <h2>Nuevo mensaje de contacto</h2>
+          <p><strong>Nombre:</strong> ${sanitizedData.name}</p>
+          <p><strong>Email:</strong> ${sanitizedData.email}</p>
+          <p><strong>Empresa:</strong> ${sanitizedData.company || 'No especificada'}</p>
+          <p><strong>Servicio:</strong> ${sanitizedData.service || 'No especificado'}</p>
+          <p><strong>Presupuesto:</strong> ${sanitizedData.budget || 'No especificado'}</p>
+          <p><strong>Mensaje:</strong></p>
+          <p>${sanitizedData.message}</p>
+          <hr>
+          <p><small>Enviado el ${new Date().toISOString()}</small></p>
+        `,
+      });
+    }
 
     return NextResponse.json({
       success: true,

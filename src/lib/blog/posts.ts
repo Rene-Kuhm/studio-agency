@@ -26,7 +26,7 @@ export async function getAllPosts(): Promise<PostMeta[]> {
           category: data.category,
           tags: data.tags || [],
           coverImage: data.coverImage,
-          author: data.author || { name: 'Studio' },
+          author: data.author || { name: 'TecnoDespegue' },
           readingTime: Math.ceil(stats.minutes),
           featured: data.featured || false,
         } as PostMeta;
@@ -56,7 +56,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       category: data.category,
       tags: data.tags || [],
       coverImage: data.coverImage,
-      author: data.author || { name: 'Studio' },
+      author: data.author || { name: 'TecnoDespegue' },
       content,
       readingTime: Math.ceil(stats.minutes),
       featured: data.featured || false,

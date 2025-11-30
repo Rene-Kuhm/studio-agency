@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
   // Security headers
@@ -52,4 +53,22 @@ const nextConfig: NextConfig = {
   compress: true,
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  // Sentry organization and project
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+
+  // Only upload source maps in production builds
+  silent: !process.env.CI,
+
+  // Upload source maps for better error tracking
+  widenClientFileUpload: true,
+
+  // Source maps configuration
+  sourcemaps: {
+    deleteSourcemapsAfterUpload: true,
+  },
+
+  // Disable logger in production
+  disableLogger: true,
+});

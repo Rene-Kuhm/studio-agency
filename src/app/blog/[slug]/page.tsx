@@ -36,6 +36,9 @@ export async function generateMetadata({
     title: post.title,
     description: post.description,
     authors: [{ name: post.author.name }],
+    alternates: {
+      canonical: `https://tecnodespegue.com/blog/${slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.description,
@@ -84,11 +87,11 @@ export default async function PostPage({ params }: PostPageProps) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Studio',
+      name: 'TecnoDespegue',
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://studio.com/blog/${post.slug}`,
+      '@id': `https://tecnodespegue.com/blog/${post.slug}`,
     },
   };
 

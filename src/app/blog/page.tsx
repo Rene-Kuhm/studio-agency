@@ -5,6 +5,9 @@ import { BlogPageClient } from '@/components/blog/BlogPageClient';
 export const metadata: Metadata = {
   title: 'Blog',
   description: 'Artículos sobre diseño, desarrollo web, branding y tendencias digitales. Compartimos lo que aprendemos.',
+  alternates: {
+    canonical: 'https://tecnodespegue.com/blog',
+  },
 };
 
 export default async function BlogPage() {

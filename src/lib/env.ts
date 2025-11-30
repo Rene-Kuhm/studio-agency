@@ -7,11 +7,16 @@
 export const clientEnv = {
   NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://tecnodespegue.com',
   NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+  NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
 } as const;
 
 // Server-side environment variables
 export const serverEnv = {
   RESEND_API_KEY: process.env.RESEND_API_KEY,
+  DATABASE_URL: process.env.DATABASE_URL,
+  SENTRY_DSN: process.env.SENTRY_DSN,
+  SENTRY_ORG: process.env.SENTRY_ORG,
+  SENTRY_PROJECT: process.env.SENTRY_PROJECT,
   NODE_ENV: process.env.NODE_ENV || 'development',
 } as const;
 
@@ -27,6 +32,14 @@ export function validateEnv() {
 
   if (!serverEnv.RESEND_API_KEY) {
     warnings.push('RESEND_API_KEY is not set. Email functionality will be disabled.');
+  }
+
+  if (!serverEnv.DATABASE_URL) {
+    warnings.push('DATABASE_URL is not set. Using in-memory storage (data will not persist).');
+  }
+
+  if (!serverEnv.SENTRY_DSN && !clientEnv.NEXT_PUBLIC_SENTRY_DSN) {
+    warnings.push('SENTRY_DSN is not set. Error tracking will be disabled.');
   }
 
   // Log warnings in development
@@ -57,6 +70,16 @@ export function isAnalyticsEnabled(): boolean {
 // Helper to check if email is enabled
 export function isEmailEnabled(): boolean {
   return !!serverEnv.RESEND_API_KEY;
+}
+
+// Helper to check if database is enabled
+export function isDatabaseEnabled(): boolean {
+  return !!serverEnv.DATABASE_URL;
+}
+
+// Helper to check if Sentry is enabled
+export function isSentryEnabled(): boolean {
+  return !!(serverEnv.SENTRY_DSN || clientEnv.NEXT_PUBLIC_SENTRY_DSN);
 }
 
 // Export site URL for use across the app

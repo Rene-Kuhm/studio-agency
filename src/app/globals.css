@@ -2,6 +2,7 @@
 
 :root {
   /* 2025 Color Palette - Mocha Mousse inspired + warm tones */
+  /* WCAG AA compliant contrast ratios */
   --background: #f8f5f2;
   --foreground: #1a1614;
   --primary: #1a1614;
@@ -9,12 +10,12 @@
   --secondary: #ebe5df;
   --secondary-foreground: #1a1614;
   --muted: #e8e2db;
-  --muted-foreground: #6b5b4f;
-  --accent: #a67c52;
+  --muted-foreground: #5a4a3f; /* Darkened for better contrast (4.5:1 ratio) */
+  --accent: #8b6642; /* Darkened for better contrast on light bg */
   --accent-secondary: #c9a87c;
   --accent-foreground: #f8f5f2;
   --border: #d9d0c7;
-  --ring: #a67c52;
+  --ring: #8b6642;
 
   /* Gradient colors */
   --gradient-warm: linear-gradient(135deg, #a67c52 0%, #c9a87c 50%, #e8d4b8 100%);
@@ -33,12 +34,12 @@
   --secondary: #ebe5df;
   --secondary-foreground: #1a1614;
   --muted: #e8e2db;
-  --muted-foreground: #6b5b4f;
-  --accent: #a67c52;
+  --muted-foreground: #5a4a3f;
+  --accent: #8b6642;
   --accent-secondary: #c9a87c;
   --accent-foreground: #f8f5f2;
   --border: #d9d0c7;
-  --ring: #a67c52;
+  --ring: #8b6642;
 
   --gradient-mesh: radial-gradient(at 40% 20%, #a67c5230 0px, transparent 50%),
                    radial-gradient(at 80% 0%, #c9a87c20 0px, transparent 50%),
@@ -175,10 +176,36 @@ a, button, [role="button"], input, textarea, select {
   background: var(--foreground);
 }
 
-/* Focus styles */
+/* Focus styles - Enhanced for accessibility */
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
+}
+
+/* Focus ring for buttons and interactive elements */
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(166, 124, 82, 0.2);
+}
+
+/* High contrast focus for animated components */
+.magnetic-button:focus-visible,
+.hover-card:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(166, 124, 82, 0.3);
+}
+
+/* Skip focus styles for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
 }
 
 /* Noise texture overlay */

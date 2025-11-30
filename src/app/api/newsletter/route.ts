@@ -1,27 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+import { prisma } from '@/lib/prisma';
+import { isRateLimited } from '@/lib/rate-limit';
+import { isValidOrigin } from '@/lib/csrf';
 import { logger } from '@/lib/logger';
 
-// Rate limiting map
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const MAX_REQUESTS = 3;
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const record = rateLimit.get(ip);
-
-  if (!record || now > record.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return false;
-  }
-
-  if (record.count >= MAX_REQUESTS) {
-    return true;
-  }
-
-  record.count++;
-  return false;
-}
+// Lazy initialization to avoid build-time errors
+const getResend = () => {
+  if (!process.env.RESEND_API_KEY) return null;
+  return new Resend(process.env.RESEND_API_KEY);
+};
 
 // Validate email format
 function isValidEmail(email: string): boolean {
@@ -29,16 +17,24 @@ function isValidEmail(email: string): boolean {
   return emailRegex.test(email);
 }
 
-// In-memory storage for newsletter subscribers (use database in production)
-const subscribers = new Set<string>();
+// Fallback in-memory storage (used when DB is unavailable)
+const memorySubscribers = new Set<string>();
 
 export async function POST(request: NextRequest) {
   try {
+    // Validate origin (CSRF protection)
+    if (!isValidOrigin(request)) {
+      return NextResponse.json(
+        { error: 'Solicitud no autorizada.' },
+        { status: 403 }
+      );
+    }
+
     const ip = request.headers.get('x-forwarded-for') ||
                request.headers.get('x-real-ip') ||
                'unknown';
 
-    if (isRateLimited(ip)) {
+    if (await isRateLimited(`newsletter:${ip}`)) {
       return NextResponse.json(
         { error: 'Demasiadas solicitudes. Por favor, esperá un momento.' },
         { status: 429 }
@@ -62,44 +58,64 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if already subscribed
-    if (subscribers.has(email.toLowerCase())) {
-      return NextResponse.json(
-        { error: 'Este email ya está suscrito.' },
-        { status: 400 }
-      );
-    }
+    const normalizedEmail = email.toLowerCase();
 
-    // Add to subscribers
-    subscribers.add(email.toLowerCase());
+    // Check if already subscribed (DB or memory fallback)
+    if (process.env.DATABASE_URL) {
+      const existing = await prisma.subscriber.findUnique({
+        where: { email: normalizedEmail },
+      });
+
+      if (existing) {
+        if (existing.active) {
+          return NextResponse.json(
+            { error: 'Este email ya está suscrito.' },
+            { status: 400 }
+          );
+        }
+        // Reactivate if previously unsubscribed
+        await prisma.subscriber.update({
+          where: { email: normalizedEmail },
+          data: { active: true },
+        });
+      } else {
+        // Create new subscriber
+        await prisma.subscriber.create({
+          data: { email: normalizedEmail },
+        });
+      }
+    } else {
+      // Fallback to memory
+      if (memorySubscribers.has(normalizedEmail)) {
+        return NextResponse.json(
+          { error: 'Este email ya está suscrito.' },
+          { status: 400 }
+        );
+      }
+      memorySubscribers.add(normalizedEmail);
+    }
 
     // Log the subscription
     logger.formSubmission('newsletter', {
-      email: email.toLowerCase(),
+      email: normalizedEmail,
       timestamp: new Date().toISOString(),
     });
 
-    // In production, you would:
-    // 1. Save to database
-    // 2. Add to email service (Mailchimp, ConvertKit, Resend, etc.)
-    // 3. Send confirmation email
-
-    /*
-    // Example with Resend
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    await resend.emails.send({
-      from: 'TecnoDespegue <newsletter@tecnodespegue.com>',
-      to: email,
-      subject: '¡Bienvenido al newsletter de TecnoDespegue!',
-      html: `
-        <h2>¡Gracias por suscribirte!</h2>
-        <p>A partir de ahora recibirás las últimas novedades sobre diseño, desarrollo y tendencias digitales.</p>
-        <p>¡Nos vemos pronto!</p>
-        <p>El equipo de TecnoDespegue</p>
-      `,
-    });
-    */
+    // Send welcome email with Resend
+    const resend = getResend();
+    if (resend) {
+      await resend.emails.send({
+        from: 'TecnoDespegue <newsletter@tecnodespegue.com>',
+        to: email,
+        subject: '¡Bienvenido al newsletter de TecnoDespegue!',
+        html: `
+          <h2>¡Gracias por suscribirte!</h2>
+          <p>A partir de ahora recibirás las últimas novedades sobre diseño, desarrollo y tendencias digitales.</p>
+          <p>¡Nos vemos pronto!</p>
+          <p>El equipo de TecnoDespegue</p>
+        `,
+      });
+    }
 
     return NextResponse.json({
       success: true,
