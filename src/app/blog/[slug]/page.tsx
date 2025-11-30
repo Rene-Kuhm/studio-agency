@@ -4,6 +4,7 @@ import { getPostBySlug, getAllPosts } from '@/lib/blog/posts';
 import { PostHeader } from '@/components/blog/PostHeader';
 import { PostContent } from '@/components/blog/PostContent';
 import { RelatedPosts } from '@/components/blog/RelatedPosts';
+import { BlogPostWrapper } from '@/components/blog/BlogPostWrapper';
 import Link from 'next/link';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
 import { Marquee } from '@/components/animations/Marquee';
@@ -92,7 +93,7 @@ export default async function PostPage({ params }: PostPageProps) {
   };
 
   return (
-    <>
+    <BlogPostWrapper>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -214,6 +215,6 @@ export default async function PostPage({ params }: PostPageProps) {
         </span>
         <span className="text-accent-foreground/30 text-xl">✦</span>
       </Marquee>
-    </>
+    </BlogPostWrapper>
   );
 }

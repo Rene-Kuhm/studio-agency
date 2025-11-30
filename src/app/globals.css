@@ -24,8 +24,30 @@
                    radial-gradient(at 0% 50%, #e8d4b815 0px, transparent 50%);
 }
 
+/* Light theme (explicit class) */
+:root.light {
+  --background: #f8f5f2;
+  --foreground: #1a1614;
+  --primary: #1a1614;
+  --primary-foreground: #f8f5f2;
+  --secondary: #ebe5df;
+  --secondary-foreground: #1a1614;
+  --muted: #e8e2db;
+  --muted-foreground: #6b5b4f;
+  --accent: #a67c52;
+  --accent-secondary: #c9a87c;
+  --accent-foreground: #f8f5f2;
+  --border: #d9d0c7;
+  --ring: #a67c52;
+
+  --gradient-mesh: radial-gradient(at 40% 20%, #a67c5230 0px, transparent 50%),
+                   radial-gradient(at 80% 0%, #c9a87c20 0px, transparent 50%),
+                   radial-gradient(at 0% 50%, #e8d4b815 0px, transparent 50%);
+}
+
+/* Dark theme variables */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --background: #0d0b0a;
     --foreground: #f8f5f2;
     --primary: #f8f5f2;
@@ -44,6 +66,27 @@
                      radial-gradient(at 80% 0%, #c9a87c10 0px, transparent 50%),
                      radial-gradient(at 0% 50%, #e8d4b808 0px, transparent 50%);
   }
+}
+
+/* Dark theme (explicit class) */
+:root.dark {
+  --background: #0d0b0a;
+  --foreground: #f8f5f2;
+  --primary: #f8f5f2;
+  --primary-foreground: #0d0b0a;
+  --secondary: #1f1b18;
+  --secondary-foreground: #f8f5f2;
+  --muted: #2a2521;
+  --muted-foreground: #a89a8c;
+  --accent: #c9a87c;
+  --accent-secondary: #a67c52;
+  --accent-foreground: #0d0b0a;
+  --border: #2a2521;
+  --ring: #c9a87c;
+
+  --gradient-mesh: radial-gradient(at 40% 20%, #a67c5215 0px, transparent 50%),
+                   radial-gradient(at 80% 0%, #c9a87c10 0px, transparent 50%),
+                   radial-gradient(at 0% 50%, #e8d4b808 0px, transparent 50%);
 }
 
 @theme inline {

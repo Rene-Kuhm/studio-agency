@@ -13,7 +13,11 @@ const footerLinks = {
   ],
   recursos: [
     { href: '/blog', label: 'Blog' },
+    { href: '/faq', label: 'FAQ' },
     { href: '/contact', label: 'Contacto' },
+    { href: '/feed.xml', label: 'RSS Feed' },
+  ],
+  legal: [
     { href: '/privacy', label: 'Privacidad' },
     { href: '/terms', label: 'Términos' },
   ],
@@ -85,23 +89,37 @@ export function Footer() {
             </ul>
           </FadeIn>
 
-          {/* Social */}
+          {/* Legal */}
           <FadeIn delay={0.3}>
-            <h4 className="font-semibold mb-4">Social</h4>
+            <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-3">
-              {footerLinks.social.map((link) => (
+              {footerLinks.legal.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
+
+            <h4 className="font-semibold mb-4 mt-8">Social</h4>
+            <div className="flex gap-3">
+              {footerLinks.social.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                  aria-label={link.label}
+                >
+                  {link.label.charAt(0)}
+                </a>
+              ))}
+            </div>
           </FadeIn>
         </div>
 

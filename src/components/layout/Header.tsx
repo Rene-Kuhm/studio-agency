@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils/cn';
 import { MagneticButton } from '@/components/animations/MagneticButton';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const navLinks = [
   { href: '/', label: 'Inicio' },
@@ -111,8 +112,9 @@ export function Header() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
+          {/* Right side: Theme Toggle + CTA Button */}
+          <div className="hidden lg:flex items-center gap-4">
+            <ThemeToggle />
             <MagneticButton strength={0.4}>
               <Link href="/contact" data-cursor="Click">
                 <motion.div
@@ -232,6 +234,12 @@ export function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
               >
+                <div className="flex items-center justify-between mb-6">
+                  <p className="text-sm text-muted-foreground">
+                    Cambiar tema
+                  </p>
+                  <ThemeToggle />
+                </div>
                 <p className="text-sm text-muted-foreground mb-4">
                   ¿Listo para empezar?
                 </p>

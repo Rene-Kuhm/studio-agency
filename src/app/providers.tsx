@@ -2,11 +2,16 @@
 
 import { type ReactNode } from 'react';
 import { SmoothScrollProvider } from '@/providers/SmoothScrollProvider';
+import { ThemeProvider } from '@/providers/ThemeProvider';
 
 interface ProvidersProps {
   children: ReactNode;
 }
 
 export function Providers({ children }: ProvidersProps) {
-  return <SmoothScrollProvider>{children}</SmoothScrollProvider>;
+  return (
+    <ThemeProvider>
+      <SmoothScrollProvider>{children}</SmoothScrollProvider>
+    </ThemeProvider>
+  );
 }

@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Cursor } from '@/components/animations/Cursor';
 import { Analytics } from '@/components/Analytics';
+import { CookieConsent } from '@/components/CookieConsent';
 import './globals.css';
 
 const geistSans = Geist({
@@ -36,6 +37,11 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'TecnoDespegue' }],
   manifest: '/manifest.json',
+  alternates: {
+    types: {
+      'application/rss+xml': '/feed.xml',
+    },
+  },
   openGraph: {
     type: 'website',
     locale: 'es_AR',
@@ -82,6 +88,7 @@ export default function RootLayout({
           <Header />
           <main className="min-h-screen">{children}</main>
           <Footer />
+          <CookieConsent />
         </Providers>
       </body>
     </html>
