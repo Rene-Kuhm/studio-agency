@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'tecnodespegue2024';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 export async function POST(request: NextRequest) {
   try {
     const { password } = await request.json();
+
+    if (!ADMIN_PASSWORD) {
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+    }
 
     if (password === ADMIN_PASSWORD) {
       // Create a simple session token
