@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Providers } from './providers';
 import { Header } from '@/components/layout/Header';
@@ -35,16 +35,6 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'TecnoDespegue' }],
   manifest: '/manifest.json',
-  icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/icon-192.svg', sizes: '192x192', type: 'image/svg+xml' },
-      { url: '/icon-512.svg', sizes: '512x512', type: 'image/svg+xml' },
-    ],
-    apple: [
-      { url: '/apple-icon.svg', type: 'image/svg+xml' },
-    ],
-  },
   openGraph: {
     type: 'website',
     locale: 'es_AR',
@@ -64,7 +54,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
   themeColor: '#a67c52',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
