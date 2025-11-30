@@ -21,7 +21,7 @@ export default function AdminLoginPage() {
       });
 
       if (res.ok) {
-        window.location.href = '/admin/posts';
+        window.location.href = '/admin/dashboard';
       } else {
         setError('Contraseña incorrecta');
       }
