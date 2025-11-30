@@ -7,6 +7,7 @@ import { Cursor } from '@/components/animations/Cursor';
 import { Analytics } from '@/components/Analytics';
 import { CookieConsent } from '@/components/CookieConsent';
 import { SkipLink } from '@/components/SkipLink';
+import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration';
 import './globals.css';
 
 const geistSans = Geist({
@@ -95,6 +96,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <CookieConsent />
+          <ServiceWorkerRegistration />
         </Providers>
       </body>
     </html>

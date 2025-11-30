@@ -53,12 +53,14 @@ https://github.com/Rene-Kuhm/studio-agency
 18. [x] Páginas de tags (`/blog/tag/[tag]`)
 19. [x] Sistema de comentarios con Giscus (requiere configurar env vars)
 
+### PWA y SEO
+20. [x] Service Worker para PWA offline (`public/sw.js`, página `/offline`)
+21. [x] OG images dinámicas para blog posts (`/api/og`)
+22. [x] Link al RSS feed en header
+
 ## Tareas Pendientes
 
-### Baja Prioridad (Mejoras futuras)
-1. [ ] Service worker para PWA offline
-2. [ ] OG images dinámicas para blog posts
-3. [ ] Link al RSS feed en header
+El proyecto está completo. Todas las funcionalidades principales están implementadas.
 
 ## Configuración Requerida
 
