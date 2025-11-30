@@ -12,8 +12,8 @@ import { Button } from '@/components/ui/Button';
 const contactInfo = [
   {
     label: 'Email',
-    value: 'hola@studio.com',
-    href: 'mailto:hola@studio.com',
+    value: 'hola@tecnodespegue.com',
+    href: 'mailto:hola@tecnodespegue.com',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -67,8 +67,11 @@ export default function ContactPage() {
     service: '',
     budget: '',
     message: '',
+    website: '', // Honeypot field
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const { scrollYProgress } = useScroll({
@@ -82,10 +85,40 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(formData);
-    setIsSubmitting(false);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error al enviar el mensaje');
+      }
+
+      setSubmitStatus('success');
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        service: '',
+        budget: '',
+        message: '',
+        website: '',
+      });
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Error al enviar el mensaje');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -461,8 +494,49 @@ export default function ContactPage() {
                     </Button>
                   </MagneticButton>
 
+                  {/* Honeypot field - hidden from users, visible to bots */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    className="absolute -left-[9999px] opacity-0 pointer-events-none"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                  />
+
+                  {/* Status messages */}
+                  {submitStatus === 'success' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-center"
+                    >
+                      <p className="text-green-600 font-medium">
+                        ¡Mensaje enviado con éxito! Te responderemos pronto.
+                      </p>
+                    </motion.div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-center"
+                    >
+                      <p className="text-red-600 font-medium">
+                        {errorMessage || 'Error al enviar el mensaje. Por favor, intentá de nuevo.'}
+                      </p>
+                    </motion.div>
+                  )}
+
                   <p className="text-xs text-center text-muted-foreground">
-                    Al enviar este formulario, aceptás nuestra política de privacidad.
+                    Al enviar este formulario, aceptás nuestra{' '}
+                    <a href="/privacy" className="text-accent hover:underline">
+                      política de privacidad
+                    </a>
+                    .
                   </p>
                 </div>
               </motion.form>
